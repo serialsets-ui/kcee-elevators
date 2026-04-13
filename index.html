@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KCEE Elevators Global Limited</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230A1F3F'/><text x='16' y='22' text-anchor='middle' fill='%23C5A044' font-size='14' font-weight='bold' font-family='sans-serif'>KC</text></svg>">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: sans-serif; background: #040B14; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #060E1A; }
+    ::-webkit-scrollbar-thumb { background: #1A2A3F; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #C5A044; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    const { useState, useEffect, useLayoutEffect, useRef, useCallback } = React;
+
+    /* ═══════════════════════════════════════════
+   KCEE ELEVATORS — MULTI-PAGE WEBSITE
+   ═══════════════════════════════════════════ */
+
+const C = {
+  navy: "#0A1F3F", deep: "#040B14", gold: "#C5A044", goldL: "#D4B86A",
+  cyan: "#00BFDD", steel: "#1A2A3F", grey: "#6B7B8D", greyL: "#9AACBE",
+  white: "#F0F2F5", card: "rgba(20,35,55,0.65)", bg: "#060E1A",
+};
+const LOGO = "data:image/jpeg;base64,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";
+const font = "'Outfit', sans-serif";
+const serif = "'DM Serif Display', serif";
+
+/* ─── Scroll Reveal ─── */
+function useInView(t = 0.12) {
+  const ref = useRef(null);
+  const [v, setV] = useState(false);
+  const instant = useRef(false);
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      instant.current = true;
+      setV(true);
+    }
+  }, []);
+  useEffect(() => {
+    if (v) return;
+    const el = ref.current; if (!el) return;
+    const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setV(true); o.disconnect(); } }, { threshold: t });
+    o.observe(el); return () => o.disconnect();
+  }, [t, v]);
+  return [ref, v, instant.current];
+}
+function R({ children, delay = 0, style = {} }) {
+  const [ref, v, instant] = useInView();
+  return <div ref={ref} style={{ opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(36px)", transition: instant ? "none" : `opacity 0.6s ease ${delay}s, transform 0.6s ease ${delay}s`, ...style }}>{children}</div>;
+}
+
+/* ─── Shared Styles ─── */
+const btnP = { background: `linear-gradient(135deg, ${C.gold}, ${C.goldL})`, color: C.navy, border: "none", padding: "14px 32px", borderRadius: 8, fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: font, letterSpacing: 1.2, boxShadow: `0 4px 24px ${C.gold}33`, transition: "all 0.3s" };
+const btnO = { background: "transparent", color: C.gold, border: `2px solid ${C.gold}`, padding: "12px 28px", borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: "pointer", fontFamily: font, letterSpacing: 1, transition: "all 0.3s" };
+const btnSm = (s) => ({ ...s, padding: "10px 22px", fontSize: 12 });
+const inputS = { width: "100%", padding: "12px 16px", background: "rgba(10,31,63,0.6)", border: `1px solid ${C.steel}`, borderRadius: 8, color: C.white, fontSize: 14, fontFamily: font, outline: "none", boxSizing: "border-box", transition: "border-color 0.2s" };
+const labelS = { fontSize: 11, color: C.greyL, fontWeight: 600, display: "block", marginBottom: 4, fontFamily: font, letterSpacing: 0.5, textTransform: "uppercase" };
+
+/* ─── Section Heading ─── */
+function SH({ tag, title, sub, light }) {
+  return (
+    <div style={{ textAlign: "center", marginBottom: sub ? 48 : 56 }}>
+      {tag && <div style={{ fontSize: 11, letterSpacing: 6, color: C.cyan, fontWeight: 700, marginBottom: 10, textTransform: "uppercase", fontFamily: font }}>{tag}</div>}
+      <h2 style={{ fontFamily: serif, fontSize: 40, color: light ? C.navy : C.white, margin: 0, lineHeight: 1.15 }}>{title}</h2>
+      <div style={{ width: 60, height: 3, background: C.gold, margin: "16px auto 0", borderRadius: 2 }} />
+      {sub && <p style={{ fontSize: 15, color: light ? C.grey : C.greyL, maxWidth: 560, margin: "16px auto 0", lineHeight: 1.7 }}>{sub}</p>}
+    </div>
+  );
+}
+
+/* ─── Page Hero Banner ─── */
+function PageHero({ title, sub, tag }) {
+  return (
+    <section style={{ position: "relative", padding: "160px 24px 80px", textAlign: "center", background: `linear-gradient(175deg, ${C.deep} 0%, ${C.navy} 50%, ${C.steel} 100%)`, overflow: "hidden" }}>
+      <div style={{ position: "absolute", inset: 0, opacity: 0.03, backgroundImage: `repeating-linear-gradient(90deg, transparent, transparent 80px, ${C.gold} 80px, ${C.gold} 81px), repeating-linear-gradient(0deg, transparent, transparent 80px, ${C.cyan}66 80px, ${C.cyan}66 81px)` }} />
+      <div style={{ position: "relative", zIndex: 1, maxWidth: 700, margin: "0 auto" }}>
+        {tag && <div style={{ fontSize: 11, letterSpacing: 6, color: C.cyan, fontWeight: 700, marginBottom: 14, textTransform: "uppercase" }}>{tag}</div>}
+        <h1 style={{ fontFamily: serif, fontSize: 48, color: C.white, margin: "0 0 16px", lineHeight: 1.1 }}>{title}</h1>
+        <div style={{ width: 70, height: 4, background: `linear-gradient(90deg, ${C.gold}, ${C.cyan})`, borderRadius: 2, margin: "0 auto 20px" }} />
+        {sub && <p style={{ fontSize: 16, color: C.greyL, lineHeight: 1.7 }}>{sub}</p>}
+      </div>
+    </section>
+  );
+}
+
+/* ─── Modal ─── */
+function Modal({ open, onClose, title, children }) {
+  if (!open) return null;
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }} onClick={onClose}>
+      <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.75)", backdropFilter: "blur(8px)" }} />
+      <div onClick={e => e.stopPropagation()} style={{ position: "relative", background: `linear-gradient(160deg, ${C.deep}, ${C.steel})`, borderRadius: 16, padding: "36px 32px", maxWidth: 520, width: "100%", border: `1px solid ${C.gold}33`, boxShadow: "0 24px 80px rgba(0,0,0,0.6)", maxHeight: "85vh", overflowY: "auto" }}>
+        <button onClick={onClose} style={{ position: "absolute", top: 14, right: 18, background: "none", border: "none", color: C.grey, fontSize: 22, cursor: "pointer" }}>✕</button>
+        <h2 style={{ fontFamily: serif, fontSize: 26, color: C.gold, margin: "0 0 6px" }}>{title}</h2>
+        <div style={{ width: 50, height: 3, background: C.cyan, borderRadius: 2, marginBottom: 24 }} />
+        {children}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Feature Card ─── */
+function FeatureCard({ icon, title, desc, color, onClick }) {
+  const [h, setH] = useState(false);
+  return (
+    <div onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)} onClick={onClick}
+      style={{ background: C.card, borderRadius: 14, padding: "32px 28px", border: `1px solid ${h ? (color || C.gold) + "55" : C.steel}`, transition: "all 0.4s", cursor: onClick ? "pointer" : "default", transform: h ? "translateY(-4px)" : "none", position: "relative", overflow: "hidden" }}>
+      {color && <div style={{ position: "absolute", top: 0, right: 0, width: 80, height: 80, background: `radial-gradient(circle at top right, ${color}18, transparent)` }} />}
+      <div style={{ fontSize: 32, marginBottom: 14 }}>{icon}</div>
+      <h3 style={{ fontFamily: serif, fontSize: 20, color: C.white, margin: "0 0 10px" }}>{title}</h3>
+      <p style={{ fontSize: 13, color: C.greyL, lineHeight: 1.65, margin: 0 }}>{desc}</p>
+    </div>
+  );
+}
+
+/* ═══ DATA ═══ */
+const SERVICES = [
+  { id: "supply", icon: "⬆", title: "Elevator Supply", short: "Premium elevators sourced from certified global manufacturers.", desc: "We supply a complete range of vertical mobility equipment — passenger, freight, hospital, panoramic glass elevators, escalators and moving walkways — sourced from certified manufacturers in Türkiye, China, and established global OEM networks. Every unit is selected for build quality, safety compliance, and value.", features: ["Passenger, freight, hospital, panoramic & escalator supply", "Certified manufacturers in Türkiye, China & global OEMs", "Full specification advisory and technical selection", "Budget-to-premium range across all building types", "CIF Lagos delivery with customs clearing support", "Warranty-backed equipment with spare parts availability"], color: C.cyan },
+  { id: "installation", icon: "⚡", title: "Installation Services", short: "End-to-end project delivery from site inspection to commissioning.", desc: "Our installation team manages every phase — from initial site visit and shaft dimension verification through mechanical and electrical installation to final testing, commissioning, and client handover. We coordinate with builders, architects, and MEP consultants to ensure seamless integration.", features: ["Pre-installation site inspection & technical assessment", "Shaft design advisory for new constructions", "Mechanical and electrical installation", "Full system commissioning and load testing", "Builder & MEP consultant coordination", "Client handover with training and documentation"], color: C.gold },
+  { id: "maintenance", icon: "🔧", title: "Maintenance & Servicing", short: "Structured plans from basic inspection to 24/7 premium coverage.", desc: "Equipment uptime is critical to building operations. Our maintenance programs provide structured preventive care across three tiers — Basic, Standard, and Premium — with clear SLAs, digital service reports, and dedicated account management. Emergency response is available on all plans.", features: ["Basic: Monthly inspection with 48-hour response", "Standard: Bi-weekly servicing + minor repairs, 24-hour SLA", "Premium: 24/7 support with 4-hour emergency response", "Digital service reports after every visit", "Certified spare parts replacement", "Annual safety audit and compliance documentation"], color: "#4CAF50" },
+  { id: "modernization", icon: "⚙", title: "Repairs & Modernization", short: "Upgrades and refurbishment to extend equipment life.", desc: "Aging equipment doesn't always need replacement. Our modernization services upgrade control systems, safety components, cabin finishes, and drive systems to current standards — extending equipment life by 15–20 years while improving performance, efficiency, and compliance.", features: ["Control system and drive upgrades", "Safety component replacement and enhancement", "Cabin interior refurbishment and redesign", "Door operator and landing door modernization", "Energy efficiency improvements", "Full compliance re-certification"], color: "#AB47BC" },
+];
+
+const PRODUCTS = [
+  { name: "Home / Residential Elevators", desc: "Compact, elegant lift solutions designed for private homes, duplexes, mansions, and luxury villas. Quiet operation, minimal shaft requirements, and premium cabin finishes that blend seamlessly with interior design. Available in hydraulic, traction, and vacuum-driven configurations.", specs: [["Capacity", "250 – 630 kg"], ["Speed", "0.3 – 0.6 m/s"], ["Stops", "2 – 6 floors"], ["Drive", "Hydraulic / Traction / Vacuum"]], color: "#E8B84B", icon: "🏠" },
+  { name: "Passenger Elevators", desc: "Smooth, quiet vertical transport for residential towers, commercial buildings, and mixed-use developments. Available in geared and gearless traction configurations, machine-room and machine-room-less (MRL) designs.", specs: [["Capacity", "630 – 2,000 kg"], ["Speed", "1.0 – 4.0 m/s"], ["Stops", "Up to 40 floors"], ["Drive", "Geared / Gearless"]], color: C.cyan, icon: "🏢" },
+  { name: "Freight Elevators", desc: "Heavy-duty lifting solutions for warehouses, industrial facilities, logistics centres, and commercial loading docks. Reinforced car structures with wide door openings for pallet and equipment access.", specs: [["Capacity", "2,000 – 10,000 kg"], ["Speed", "0.5 – 1.5 m/s"], ["Door Width", "Up to 3,000 mm"], ["Drive", "Geared Traction"]], color: C.gold, icon: "📦" },
+  { name: "Hospital / Bed Elevators", desc: "Spacious bed elevators with ultra-smooth acceleration, wide door openings, priority call systems, and antibacterial finishes designed for 24/7 healthcare operations.", specs: [["Capacity", "1,600 – 2,500 kg"], ["Speed", "1.0 – 2.5 m/s"], ["Door Width", "1,400 mm+"], ["Features", "Priority call, UPS"]], color: "#4CAF50", icon: "🏥" },
+  { name: "Panoramic Glass Elevators", desc: "Glass-walled elevators that combine precision engineering with architectural impact. Ideal for hotels, malls, and landmark buildings seeking visual distinction and guest experience.", specs: [["Capacity", "630 – 1,600 kg"], ["Speed", "1.0 – 2.5 m/s"], ["Glass", "Laminated safety"], ["Lighting", "LED integrated"]], color: "#AB47BC", icon: "✨" },
+  { name: "Escalators & Moving Walkways", desc: "High-traffic people-moving solutions for shopping malls, airports, transit stations, and commercial complexes. Energy-efficient motors with auto-start technology and safety sensors.", specs: [["Capacity", "6,000 – 9,000 p/hr"], ["Speed", "0.5 m/s"], ["Rise", "Up to 12 metres"], ["Width", "600 / 800 / 1,000 mm"]], color: "#FF7043", icon: "🔄" },
+];
+
+const SOLUTIONS = [
+  { sector: "Private Residences", icon: "🏡", stat: "100%", statL: "bespoke designs", desc: "Luxury home elevators for private villas, duplexes, mansions, and high-end residential estates. We deliver compact, whisper-quiet lift systems that integrate seamlessly with your home architecture — from modern minimalist glass cabins to classic wood-panelled interiors. Minimal shaft requirements, low energy consumption, and installation with minimal disruption to your home.", points: ["Compact designs for existing homes and new builds", "Hydraulic, traction, and vacuum-driven options", "Custom cabin finishes — glass, wood, marble, steel", "Wheelchair-accessible and elderly-friendly configurations"] },
+  { sector: "Real Estate & Developers", icon: "🏗", stat: "60%", statL: "of our projects", desc: "End-to-end elevator solutions for residential towers, gated communities, and mixed-use developments. We work with developers from architectural design phase through handover, ensuring lift specifications match building class, traffic analysis, and buyer expectations.", points: ["Early-stage shaft design consultation", "Multi-unit bulk pricing for large developments", "Phased delivery aligned with construction schedule", "After-sales maintenance packages included"] },
+  { sector: "Hotels & Hospitality", icon: "🏨", stat: "5-Star", statL: "grade solutions", desc: "Premium passenger and service elevators that reflect your brand's standard. Quiet operation, elegant cabin finishes, priority floor access for VIP service, and panoramic options for landmark lobbies that become part of the guest experience.", points: ["Panoramic elevators for lobby impact", "Service lifts with separate access", "Custom cabin finishes to match interior design", "Priority VIP floor access systems"] },
+  { sector: "Hospitals & Healthcare", icon: "🏥", stat: "24/7", statL: "operation ready", desc: "Certified bed elevators, service lifts, and emergency priority systems designed for round-the-clock healthcare operations. Wide doors, smooth acceleration, backup power integration, and antibacterial surfaces.", points: ["Bed/stretcher-compatible car dimensions", "Emergency priority override systems", "UPS and backup power integration", "Antibacterial cabin finishes"] },
+  { sector: "Corporate & Commercial", icon: "🏢", stat: "4.0 m/s", statL: "speeds available", desc: "High-speed passenger elevators, smart destination dispatch, and energy-efficient systems for office towers, banks, government buildings, and commercial complexes. Scalable solutions across building height and peak-hour traffic demands.", points: ["Destination dispatch for traffic optimization", "High-speed systems for tall buildings", "Energy-efficient regenerative drives", "Access control and security integration"] },
+];
+
+const PROJECTS = [
+  { name: "Azure Heights Residential Tower", location: "Victoria Island, Lagos", type: "Passenger Elevators", scope: "Supply & Installation", units: 3, status: "Completed", year: "2025" },
+  { name: "National Medical Centre Expansion", location: "Wuse II, Abuja", type: "Hospital/Bed Elevators", scope: "Modernization", units: 2, status: "Completed", year: "2025" },
+  { name: "Gateway Commercial Plaza", location: "GRA, Port Harcourt", type: "Passenger + Freight", scope: "Full Installation", units: 4, status: "In Progress", year: "2026" },
+  { name: "Oceanview Hotel & Resort", location: "Lekki, Lagos", type: "Panoramic + Service", scope: "Supply & Install", units: 5, status: "In Progress", year: "2026" },
+  { name: "Sterling Office Complex", location: "Ikeja CBD, Lagos", type: "High-Speed Passenger", scope: "Supply & Installation", units: 6, status: "Planned", year: "2026" },
+  { name: "Federal Government Secretariat", location: "Abuja", type: "Passenger Elevators", scope: "Modernization", units: 4, status: "Completed", year: "2024" },
+];
+
+const STATS = [{ val: "150+", label: "Lifts Installed" }, { val: "50+", label: "Active Clients" }, { val: "98%", label: "Safety Record" }, { val: "6", label: "Cities Covered" }];
+
+/* ═══ MAIN APP ═══ */
+function KCEEWebsite() {
+  const [page, setPage] = useState("home");
+  const [scrollY, setScrollY] = useState(0);
+  const [mobileMenu, setMobileMenu] = useState(false);
+  const [modal, setModal] = useState(null);
+  const [submitted, setSubmitted] = useState(null);
+  const [qf, setQf] = useState({ name: "", email: "", phone: "", project: "", location: "", floors: "", type: "Passenger Elevator", message: "" });
+  const [inf, setInf] = useState({ name: "", phone: "", address: "", date: "", issue: "" });
+
+  useEffect(() => { const h = () => setScrollY(window.scrollY); window.addEventListener("scroll", h, { passive: true }); return () => window.removeEventListener("scroll", h); }, []);
+
+  const nav = useCallback((p) => { setPage(p); setMobileMenu(false); window.scrollTo({ top: 0, behavior: "smooth" }); }, []);
+  const scrollTo = (id) => { document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); setMobileMenu(false); };
+
+  const NAV = [
+    { label: "Home", page: "home" },
+    { label: "About", page: "about" },
+    { label: "Services", page: "services" },
+    { label: "Products", page: "products" },
+    { label: "Solutions", page: "solutions" },
+    { label: "Projects", page: "projects" },
+    { label: "Contact", page: "contact" },
+  ];
+
+  /* ─── QUOTE FORM ─── */
+  const QuoteForm = () => submitted === "quote" ? (
+    <div style={{ textAlign: "center", padding: 32 }}>
+      <div style={{ fontSize: 56, marginBottom: 12 }}>✅</div>
+      <h3 style={{ color: C.gold, fontSize: 22, margin: "0 0 8px", fontFamily: serif }}>Quote Request Submitted</h3>
+      <p style={{ color: C.greyL, fontSize: 14 }}>Our engineering team will respond within 24 hours.</p>
+    </div>
+  ) : (
+    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+      {[["name","Full Name","text"],["email","Email","email"],["phone","Phone","tel"],["project","Project Name","text"],["location","Location","text"],["floors","Floors","number"]].map(([k,l,t]) => (
+        <div key={k}><label style={labelS}>{l}</label><input type={t} value={qf[k]} onChange={e => setQf({...qf,[k]:e.target.value})} style={inputS} onFocus={e=>e.target.style.borderColor=C.gold} onBlur={e=>e.target.style.borderColor=C.steel}/></div>
+      ))}
+      <div><label style={labelS}>Elevator Type</label><select value={qf.type} onChange={e=>setQf({...qf,type:e.target.value})} style={inputS}>{["Passenger Elevator","Freight Elevator","Hospital/Bed Elevator","Panoramic Glass","Escalator","Other"].map(t=><option key={t} style={{background:C.navy}}>{t}</option>)}</select></div>
+      <div><label style={labelS}>Details</label><textarea rows={3} value={qf.message} onChange={e=>setQf({...qf,message:e.target.value})} style={{...inputS,resize:"vertical"}} onFocus={e=>e.target.style.borderColor=C.gold} onBlur={e=>e.target.style.borderColor=C.steel}/></div>
+      <button onClick={()=>setSubmitted("quote")} style={{...btnP,width:"100%"}}>SUBMIT QUOTE REQUEST</button>
+    </div>
+  );
+
+  const InspectionForm = () => submitted === "inspection" ? (
+    <div style={{ textAlign: "center", padding: 32 }}>
+      <div style={{ fontSize: 56, marginBottom: 12 }}>📋</div>
+      <h3 style={{ color: C.gold, fontSize: 22, margin: "0 0 8px", fontFamily: serif }}>Inspection Booked</h3>
+      <p style={{ color: C.greyL, fontSize: 14 }}>We'll confirm within 24 hours.</p>
+    </div>
+  ) : (
+    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+      {[["name","Full Name","text"],["phone","Phone","tel"],["address","Site Address","text"],["date","Preferred Date","date"]].map(([k,l,t]) => (
+        <div key={k}><label style={labelS}>{l}</label><input type={t} value={inf[k]} onChange={e=>setInf({...inf,[k]:e.target.value})} style={inputS} onFocus={e=>e.target.style.borderColor=C.gold} onBlur={e=>e.target.style.borderColor=C.steel}/></div>
+      ))}
+      <div><label style={labelS}>Issue / Purpose</label><textarea rows={3} value={inf.issue} onChange={e=>setInf({...inf,issue:e.target.value})} style={{...inputS,resize:"vertical"}} onFocus={e=>e.target.style.borderColor=C.gold} onBlur={e=>e.target.style.borderColor=C.steel}/></div>
+      <button onClick={()=>setSubmitted("inspection")} style={{...btnP,width:"100%"}}>BOOK INSPECTION</button>
+    </div>
+  );
+
+  /* ─── CTA Strip ─── */
+  const CTAStrip = () => (
+    <section style={{ background: `linear-gradient(135deg, ${C.navy}, ${C.steel})`, padding: "80px 24px", position: "relative", overflow: "hidden" }}>
+      <div style={{ position: "absolute", inset: 0, opacity: 0.04, backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 40px, ${C.gold} 40px, ${C.gold} 41px)` }} />
+      <R><div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center", position: "relative", zIndex: 1 }}>
+        <h2 style={{ fontFamily: serif, fontSize: 36, color: C.white, margin: "0 0 16px" }}>Ready to Elevate Your Project?</h2>
+        <p style={{ fontSize: 15, color: C.greyL, marginBottom: 36, maxWidth: 520, margin: "0 auto 36px", lineHeight: 1.7 }}>From a single lift to multi-unit installations, our engineering team delivers precision solutions tailored to your building.</p>
+        <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+          <button onClick={()=>setModal("quote")} style={btnP}>REQUEST QUOTE</button>
+          <button onClick={()=>setModal("inspection")} style={btnO}>BOOK INSPECTION</button>
+          <button onClick={()=>nav("contact")} style={{...btnO, borderColor:"#25D366", color:"#25D366"}}>CONTACT US</button>
+        </div>
+      </div></R>
+    </section>
+  );
+
+  /* ═══════════════════════════
+     PAGE: HOME
+     ═══════════════════════════ */
+  const HomePage = () => (
+    <>
+      {/* HERO */}
+      <section style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", overflow: "hidden" }}>
+        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(175deg, ${C.deep} 0%, ${C.navy} 40%, ${C.steel} 70%, ${C.deep} 100%)` }} />
+        <div style={{ position: "absolute", inset: 0, opacity: 0.04, backgroundImage: `repeating-linear-gradient(90deg, transparent, transparent 80px, ${C.gold} 80px, ${C.gold} 81px), repeating-linear-gradient(0deg, transparent, transparent 80px, ${C.cyan}88 80px, ${C.cyan}88 81px)` }} />
+        {[15,85].map((l,i) => <div key={i} style={{ position:"absolute", left:`${l}%`, top:0, bottom:0, width:1, background:`linear-gradient(180deg,transparent,${C.gold}22,transparent)` }}/>)}
+        <div style={{ position:"absolute", left:"85%", width:3, height:60, borderRadius:2, background:`linear-gradient(180deg,${C.cyan},${C.gold})`, opacity:0.3, animation:"elev 8s ease-in-out infinite" }}/>
+
+        <div className="hero-grid" style={{ position:"relative", zIndex:1, maxWidth:1100, margin:"0 auto", padding:"140px 32px 100px", display:"grid", gridTemplateColumns:"1fr 1fr", gap:60, alignItems:"center" }}>
+          <div>
+            <div style={{ animation:"fadeUp 0.8s ease", fontSize:11, letterSpacing:6, color:C.cyan, fontWeight:700, marginBottom:20, textTransform:"uppercase" }}>Premium Vertical Mobility Solutions</div>
+            <h1 className="hero-h1" style={{ animation:"fadeUp 0.8s ease 0.1s both", fontFamily:serif, fontSize:54, lineHeight:1.08, margin:"0 0 8px" }}>
+              <span style={{ color:C.white }}>We Lift</span><br/><span style={{ color:C.gold }}>Your Vision</span>
+            </h1>
+            <div style={{ animation:"fadeUp 0.8s ease 0.15s both", width:80, height:4, background:`linear-gradient(90deg,${C.gold},${C.cyan})`, borderRadius:2, margin:"20px 0 24px" }}/>
+            <p style={{ animation:"fadeUp 0.8s ease 0.2s both", fontSize:16, color:C.greyL, lineHeight:1.7, maxWidth:460, marginBottom:36 }}>
+              Engineering excellence in elevator supply, installation, maintenance & modernization — trusted by developers, hospitals, and hotels across Nigeria.
+            </p>
+            <div className="hero-buttons" style={{ animation:"fadeUp 0.8s ease 0.3s both", display:"flex", gap:16, flexWrap:"wrap" }}>
+              <button onClick={()=>setModal("quote")} style={btnP}>REQUEST A QUOTE</button>
+              <button onClick={()=>setModal("inspection")} style={btnO}>BOOK INSPECTION</button>
+            </div>
+            <div className="hero-stats" style={{ animation:"fadeUp 0.8s ease 0.4s both", display:"flex", gap:32, marginTop:48, flexWrap:"wrap" }}>
+              {STATS.map((b,i) => <div key={i}><div style={{ fontFamily:serif, fontSize:28, color:C.gold }}>{b.val}</div><div style={{ fontSize:11, color:C.grey, letterSpacing:1, fontWeight:500 }}>{b.label}</div></div>)}
+            </div>
+          </div>
+          <div className="hero-illust" style={{ animation:"fadeUp 1s ease 0.3s both", display:"flex", justifyContent:"center" }}>
+            <div style={{ position:"relative", width:300, height:400 }}>
+              <div style={{ position:"absolute", left:"50%", transform:"translateX(-50%)", top:0, bottom:0, width:170, border:`2px solid ${C.steel}`, borderRadius:12, background:`linear-gradient(180deg,${C.deep},${C.navy}88)` }}>
+                {[15,30,45,60,75].map((t,i)=><div key={i} style={{ position:"absolute", top:`${t}%`, left:-12, right:-12, height:1, background:`${C.steel}88` }}><span style={{ position:"absolute", left:-28, top:-8, fontSize:10, color:C.grey, fontWeight:700 }}>{5-i}F</span></div>)}
+                <div style={{ position:"absolute", left:12, right:12, height:65, top:"55%", background:`linear-gradient(180deg,${C.gold}44,${C.gold}22)`, border:`2px solid ${C.gold}88`, borderRadius:6, animation:"float 4s ease-in-out infinite", boxShadow:`0 0 30px ${C.gold}22` }}>
+                  <div style={{ position:"absolute", top:"50%", left:"50%", transform:"translate(-50%,-50%)", width:2, height:"60%", background:C.gold, opacity:0.5 }}/>
+                </div>
+                <div style={{ position:"absolute", left:"50%", transform:"translateX(-50%)", top:0, width:2, height:"55%", background:`linear-gradient(180deg,${C.cyan}44,${C.gold}44)` }}/>
+              </div>
+              <div style={{ position:"absolute", top:-10, left:"50%", transform:"translateX(-50%)", width:190, height:4, background:`linear-gradient(90deg,transparent,${C.cyan},transparent)`, borderRadius:2 }}/>
+              <div style={{ position:"absolute", bottom:-10, left:"50%", transform:"translateX(-50%)", width:190, height:4, background:`linear-gradient(90deg,transparent,${C.gold},transparent)`, borderRadius:2 }}/>
+            </div>
+          </div>
+        </div>
+        <div style={{ position:"absolute", bottom:32, left:"50%", transform:"translateX(-50%)", textAlign:"center", animation:"pulse 2s infinite" }}>
+          <div style={{ fontSize:10, letterSpacing:3, color:C.grey, marginBottom:8 }}>SCROLL</div>
+          <div style={{ width:1, height:30, background:`linear-gradient(180deg,${C.gold},transparent)`, margin:"0 auto" }}/>
+        </div>
+      </section>
+
+      {/* QUICK SERVICES */}
+      <section style={{ background:`linear-gradient(180deg,${C.deep},${C.bg})`, padding:"100px 24px" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto" }}>
+          <R><SH tag="What We Deliver" title="Core Services" sub="From supply to modernization — we handle every phase of your vertical mobility project."/></R>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(240px, 1fr))", gap:20 }}>
+            {SERVICES.map((s,i) => <R key={i} delay={i*0.08}><FeatureCard icon={s.icon} title={s.title} desc={s.short} color={s.color} onClick={()=>nav("services")}/></R>)}
+          </div>
+          <R delay={0.3}><div style={{ textAlign:"center", marginTop:40 }}><button onClick={()=>nav("services")} style={btnO}>EXPLORE ALL SERVICES →</button></div></R>
+        </div>
+      </section>
+
+      {/* QUICK PRODUCTS */}
+      <section style={{ background:C.deep, padding:"100px 24px" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto" }}>
+          <R><SH tag="Our Range" title="Elevator Products" sub="Complete range of vertical mobility equipment for every building type and budget."/></R>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(280px, 1fr))", gap:20 }}>
+            {PRODUCTS.slice(0,3).map((p,i) => (
+              <R key={i} delay={i*0.1}>
+                <div style={{ background:C.card, borderRadius:14, padding:"28px 24px", border:`1px solid ${C.steel}`, cursor:"pointer", transition:"all 0.3s" }} onClick={()=>nav("products")}
+                  onMouseEnter={e=>{e.currentTarget.style.borderColor=p.color+"55";e.currentTarget.style.transform="translateY(-3px)"}} onMouseLeave={e=>{e.currentTarget.style.borderColor=C.steel;e.currentTarget.style.transform="none"}}>
+                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:12 }}>
+                    <span style={{ fontSize:28 }}>{p.icon}</span>
+                    <div style={{ width:8, height:8, borderRadius:"50%", background:p.color, boxShadow:`0 0 10px ${p.color}44` }}/>
+                  </div>
+                  <h3 style={{ fontFamily:serif, fontSize:19, color:C.white, margin:"0 0 8px" }}>{p.name}</h3>
+                  <div style={{ display:"flex", gap:20, marginTop:12 }}>
+                    <div><div style={{ fontSize:10, color:C.grey, letterSpacing:1, fontWeight:600 }}>CAPACITY</div><div style={{ fontSize:13, color:C.white, fontWeight:700 }}>{p.specs[0][1]}</div></div>
+                    <div><div style={{ fontSize:10, color:C.grey, letterSpacing:1, fontWeight:600 }}>SPEED</div><div style={{ fontSize:13, color:C.white, fontWeight:700 }}>{p.specs[1][1]}</div></div>
+                  </div>
+                </div>
+              </R>
+            ))}
+          </div>
+          <R delay={0.3}><div style={{ textAlign:"center", marginTop:40 }}><button onClick={()=>nav("products")} style={btnO}>VIEW ALL PRODUCTS →</button></div></R>
+        </div>
+      </section>
+
+      {/* FEATURED PROJECTS */}
+      <section style={{ background:C.bg, padding:"100px 24px" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto" }}>
+          <R><SH tag="Track Record" title="Featured Projects"/></R>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(300px, 1fr))", gap:20 }}>
+            {PROJECTS.slice(0,3).map((p,i) => (
+              <R key={i} delay={i*0.1}>
+                <div style={{ background:C.card, borderRadius:14, padding:"28px 24px", border:`1px solid ${C.steel}` }}>
+                  <div style={{ display:"flex", justifyContent:"space-between", marginBottom:12 }}>
+                    <span style={{ fontSize:11, fontWeight:600, padding:"4px 12px", borderRadius:20, background:p.status==="Completed"?"#1B5E2033":`${C.gold}22`, color:p.status==="Completed"?"#4CAF50":C.gold }}>{p.status}</span>
+                    <span style={{ fontSize:12, color:C.grey }}>{p.year}</span>
+                  </div>
+                  <h3 style={{ fontSize:17, fontWeight:700, color:C.white, margin:"0 0 8px" }}>{p.name}</h3>
+                  <p style={{ fontSize:13, color:C.greyL, margin:"0 0 12px" }}>{p.location}</p>
+                  <div style={{ display:"flex", gap:16 }}>
+                    <div><div style={{ fontSize:10, color:C.grey, fontWeight:600, letterSpacing:1 }}>TYPE</div><div style={{ fontSize:12, color:C.white }}>{p.type}</div></div>
+                    <div><div style={{ fontSize:10, color:C.grey, fontWeight:600, letterSpacing:1 }}>UNITS</div><div style={{ fontSize:14, fontWeight:700, color:C.cyan }}>{p.units}</div></div>
+                  </div>
+                </div>
+              </R>
+            ))}
+          </div>
+          <R delay={0.3}><div style={{ textAlign:"center", marginTop:40 }}><button onClick={()=>nav("projects")} style={btnO}>VIEW ALL PROJECTS →</button></div></R>
+        </div>
+      </section>
+
+      <CTAStrip/>
+    </>
+  );
+
+  /* ═══ PAGE: ABOUT ═══ */
+  const AboutPage = () => (
+    <>
+      <PageHero tag="Who We Are" title="About KCEE Elevators" sub="A Nigerian-based engineering company delivering world-class vertical mobility solutions across Africa."/>
+      <section style={{ background:C.deep, padding:"80px 24px" }}>
+        <div style={{ maxWidth:900, margin:"0 auto" }}>
+          <R><div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:40 }}>
+            <div>
+              <h3 style={{ fontFamily:serif, fontSize:26, color:C.gold, margin:"0 0 16px" }}>Company Overview</h3>
+              <p style={{ fontSize:14, color:C.greyL, lineHeight:1.8 }}>KCEE Elevators Global Limited is a Nigerian-based engineering and vertical mobility solutions company specializing in the importation, installation, maintenance, and modernization of elevator and escalator systems.</p>
+              <p style={{ fontSize:14, color:C.greyL, lineHeight:1.8, marginTop:16 }}>Incorporated under the Companies and Allied Matters Act 2020, we deliver world-class lift solutions sourced from Türkiye, China, and other global manufacturing hubs — tailored for modern infrastructure demands in Nigeria and across Africa.</p>
+            </div>
+            <div>
+              <div style={{ background:C.card, borderRadius:14, padding:"28px 24px", border:`1px solid ${C.steel}`, marginBottom:20 }}>
+                <h4 style={{ fontSize:13, color:C.cyan, letterSpacing:2, fontWeight:700, marginBottom:8 }}>OUR MISSION</h4>
+                <p style={{ fontSize:14, color:C.white, lineHeight:1.7, margin:0 }}>To deliver safe, reliable, and technologically advanced vertical transportation systems that enhance building performance and user experience.</p>
+              </div>
+              <div style={{ background:C.card, borderRadius:14, padding:"28px 24px", border:`1px solid ${C.steel}` }}>
+                <h4 style={{ fontSize:13, color:C.cyan, letterSpacing:2, fontWeight:700, marginBottom:8 }}>OUR VISION</h4>
+                <p style={{ fontSize:14, color:C.white, lineHeight:1.7, margin:0 }}>To become a leading elevator solutions provider in West Africa, known for engineering excellence, safety compliance, and premium service delivery.</p>
+              </div>
+            </div>
+          </div></R>
+        </div>
+      </section>
+      {/* Stats bar */}
+      <section style={{ background:C.navy, padding:"48px 24px" }}>
+        <div style={{ maxWidth:900, margin:"0 auto", display:"flex", justifyContent:"space-around", flexWrap:"wrap", gap:24 }}>
+          {STATS.map((s,i) => <R key={i} delay={i*0.1}><div style={{ textAlign:"center" }}><div style={{ fontFamily:serif, fontSize:36, color:C.gold }}>{s.val}</div><div style={{ fontSize:11, color:C.greyL, letterSpacing:2, fontWeight:600, marginTop:4 }}>{s.label.toUpperCase()}</div></div></R>)}
+        </div>
+      </section>
+      {/* Why choose us */}
+      <section style={{ background:C.deep, padding:"80px 24px" }}>
+        <div style={{ maxWidth:900, margin:"0 auto" }}>
+          <R><SH tag="Our Edge" title="Why Choose KCEE"/></R>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(250px, 1fr))", gap:20 }}>
+            {[
+              { t: "CAC Registered", d: "Fully incorporated Nigerian company with complete corporate documentation." },
+              { t: "Engineering Expertise", d: "Experienced technical team with deep knowledge across all elevator types." },
+              { t: "Global Technology Access", d: "Direct manufacturer partnerships in Türkiye, China, and OEM networks." },
+              { t: "Fast-Response Maintenance", d: "Structured SLAs with 4-hour emergency response on premium plans." },
+              { t: "Safety First", d: "Strict adherence to international safety standards and local building codes." },
+              { t: "Competitive Pricing", d: "Flexible solutions across budget, performance, and project scale." },
+            ].map((w,i) => <R key={i} delay={i*0.06}><div style={{ background:C.card, borderRadius:12, padding:"24px 20px", border:`1px solid ${C.steel}` }}><h4 style={{ fontSize:15, color:C.gold, margin:"0 0 8px", fontWeight:700 }}>{w.t}</h4><p style={{ fontSize:13, color:C.greyL, lineHeight:1.6, margin:0 }}>{w.d}</p></div></R>)}
+          </div>
+        </div>
+      </section>
+      {/* Global sourcing */}
+      <section style={{ background:C.bg, padding:"80px 24px" }}>
+        <div style={{ maxWidth:900, margin:"0 auto" }}>
+          <R><SH tag="Supply Chain" title="Global Sourcing Advantage"/></R>
+          <R delay={0.1}><div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:20 }}>
+            {[
+              { flag:"🇹🇷", country:"Türkiye", desc:"High-quality engineering systems with European standards compliance." },
+              { flag:"🇨🇳", country:"China", desc:"Cost-effective, scalable solutions with rapid production timelines." },
+              { flag:"🌍", country:"Global OEM", desc:"Specialized equipment from certified international manufacturers." },
+            ].map((g,i) => (
+              <div key={i} style={{ background:C.card, borderRadius:14, padding:"32px 24px", border:`1px solid ${C.steel}`, textAlign:"center" }}>
+                <div style={{ fontSize:40, marginBottom:12 }}>{g.flag}</div>
+                <h4 style={{ fontSize:16, color:C.gold, margin:"0 0 8px", fontWeight:700 }}>{g.country}</h4>
+                <p style={{ fontSize:13, color:C.greyL, lineHeight:1.6, margin:0 }}>{g.desc}</p>
+              </div>
+            ))}
+          </div></R>
+        </div>
+      </section>
+      <CTAStrip/>
+    </>
+  );
+
+  /* ═══ PAGE: SERVICES ═══ */
+  const ServicesPage = () => (
+    <>
+      <PageHero tag="What We Do" title="Our Services" sub="Complete vertical mobility solutions — from equipment sourcing through lifetime maintenance."/>
+      <section style={{ background:C.deep, padding:"80px 24px" }}>
+        <div style={{ maxWidth:1000, margin:"0 auto", display:"flex", flexDirection:"column", gap:40 }}>
+          {SERVICES.map((s,i) => (
+            <R key={i} delay={i*0.1}>
+              <div style={{ display:"grid", gridTemplateColumns: i%2===0 ? "1fr 1.4fr" : "1.4fr 1fr", gap:32, alignItems:"center" }}>
+                {i%2===1 && <div style={{ background:C.card, borderRadius:16, padding:"36px 32px", border:`1px solid ${C.steel}` }}>
+                  <p style={{ fontSize:15, color:C.greyL, lineHeight:1.75, margin:"0 0 24px" }}>{s.desc}</p>
+                  <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
+                    {s.features.map((f,j) => <div key={j} style={{ display:"flex", alignItems:"flex-start", gap:8 }}><div style={{ width:6, height:6, borderRadius:"50%", background:s.color, marginTop:6, flexShrink:0 }}/><span style={{ fontSize:13, color:C.white }}>{f}</span></div>)}
+                  </div>
+                  <button onClick={()=>setModal("quote")} style={{...btnSm(btnP), marginTop:24}}>REQUEST THIS SERVICE</button>
+                </div>}
+                <div style={{ textAlign: i%2===0 ? "left" : "right" }}>
+                  <div style={{ fontSize:48, marginBottom:12 }}>{s.icon}</div>
+                  <div style={{ width:50, height:3, background:s.color, borderRadius:2, marginBottom:16, marginLeft: i%2===1 ? "auto" : 0 }}/>
+                  <h3 style={{ fontFamily:serif, fontSize:30, color:C.white, margin:"0 0 8px" }}>{s.title}</h3>
+                  <p style={{ fontSize:14, color:C.greyL }}>{s.short}</p>
+                </div>
+                {i%2===0 && <div style={{ background:C.card, borderRadius:16, padding:"36px 32px", border:`1px solid ${C.steel}` }}>
+                  <p style={{ fontSize:15, color:C.greyL, lineHeight:1.75, margin:"0 0 24px" }}>{s.desc}</p>
+                  <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
+                    {s.features.map((f,j) => <div key={j} style={{ display:"flex", alignItems:"flex-start", gap:8 }}><div style={{ width:6, height:6, borderRadius:"50%", background:s.color, marginTop:6, flexShrink:0 }}/><span style={{ fontSize:13, color:C.white }}>{f}</span></div>)}
+                  </div>
+                  <button onClick={()=>setModal("quote")} style={{...btnSm(btnP), marginTop:24}}>REQUEST THIS SERVICE</button>
+                </div>}
+              </div>
+            </R>
+          ))}
+        </div>
+      </section>
+      <CTAStrip/>
+    </>
+  );
+
+  /* ═══ PAGE: PRODUCTS ═══ */
+  const ProductsPage = () => (
+    <>
+      <PageHero tag="Our Range" title="Elevator Products" sub="Complete equipment range for every building type, traffic requirement, and budget."/>
+      <section style={{ background:C.deep, padding:"80px 24px" }}>
+        <div style={{ maxWidth:1000, margin:"0 auto", display:"flex", flexDirection:"column", gap:32 }}>
+          {PRODUCTS.map((p,i) => (
+            <R key={i} delay={i*0.08}>
+              <div style={{ background:C.card, borderRadius:16, padding:"36px 32px", border:`1px solid ${C.steel}`, display:"grid", gridTemplateColumns:"1fr 320px", gap:32, alignItems:"center" }}>
+                <div>
+                  <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:16 }}>
+                    <span style={{ fontSize:32 }}>{p.icon}</span>
+                    <div style={{ width:8, height:8, borderRadius:"50%", background:p.color, boxShadow:`0 0 12px ${p.color}44` }}/>
+                  </div>
+                  <h3 style={{ fontFamily:serif, fontSize:26, color:C.white, margin:"0 0 12px" }}>{p.name}</h3>
+                  <p style={{ fontSize:14, color:C.greyL, lineHeight:1.75, margin:"0 0 20px" }}>{p.desc}</p>
+                  <button onClick={()=>setModal("quote")} style={btnSm(btnP)}>GET QUOTATION</button>
+                </div>
+                <div style={{ background:`linear-gradient(135deg, ${C.steel}, ${C.navy})`, borderRadius:12, padding:"24px 20px" }}>
+                  <h4 style={{ fontSize:11, color:C.cyan, letterSpacing:2, fontWeight:700, marginBottom:16 }}>SPECIFICATIONS</h4>
+                  {p.specs.map(([k,v],j) => (
+                    <div key={j} style={{ display:"flex", justifyContent:"space-between", padding:"10px 0", borderBottom: j < p.specs.length-1 ? `1px solid ${C.steel}` : "none" }}>
+                      <span style={{ fontSize:12, color:C.grey, fontWeight:600 }}>{k}</span>
+                      <span style={{ fontSize:13, color:C.white, fontWeight:700 }}>{v}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </R>
+          ))}
+        </div>
+      </section>
+      <CTAStrip/>
+    </>
+  );
+
+  /* ═══ PAGE: SOLUTIONS ═══ */
+  const SolutionsPage = () => (
+    <>
+      <PageHero tag="Industry Focus" title="Sector Solutions" sub="Tailored elevator solutions for the sectors that need precision, safety, and performance."/>
+      <section style={{ background:C.deep, padding:"80px 24px" }}>
+        <div style={{ maxWidth:1000, margin:"0 auto", display:"flex", flexDirection:"column", gap:32 }}>
+          {SOLUTIONS.map((s,i) => (
+            <R key={i} delay={i*0.1}>
+              <div style={{ background:C.card, borderRadius:16, padding:"40px 36px", border:`1px solid ${C.steel}` }}>
+                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:20 }}>
+                  <div style={{ display:"flex", alignItems:"center", gap:14 }}>
+                    <span style={{ fontSize:40 }}>{s.icon}</span>
+                    <h3 style={{ fontFamily:serif, fontSize:26, color:C.white, margin:0 }}>{s.sector}</h3>
+                  </div>
+                  <div style={{ textAlign:"right" }}><div style={{ fontFamily:serif, fontSize:32, color:C.gold }}>{s.stat}</div><div style={{ fontSize:10, color:C.grey, letterSpacing:1 }}>{s.statL}</div></div>
+                </div>
+                <p style={{ fontSize:15, color:C.greyL, lineHeight:1.75, margin:"0 0 24px" }}>{s.desc}</p>
+                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10, marginBottom:24 }}>
+                  {s.points.map((p,j) => <div key={j} style={{ display:"flex", alignItems:"flex-start", gap:8 }}><div style={{ width:6, height:6, borderRadius:"50%", background:C.cyan, marginTop:6, flexShrink:0 }}/><span style={{ fontSize:13, color:C.white }}>{p}</span></div>)}
+                </div>
+                <button onClick={()=>setModal("quote")} style={btnSm(btnP)}>GET SOLUTION FOR {s.sector.split("&")[0].trim().toUpperCase()}</button>
+              </div>
+            </R>
+          ))}
+        </div>
+      </section>
+      <CTAStrip/>
+    </>
+  );
+
+  /* ═══ PAGE: PROJECTS ═══ */
+  const ProjectsPage = () => (
+    <>
+      <PageHero tag="Track Record" title="Project Portfolio" sub="A growing portfolio of elevator installations across Nigeria — from residential towers to healthcare facilities."/>
+      <section style={{ background:C.deep, padding:"80px 24px" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto" }}>
+          {/* Stats */}
+          <R><div style={{ display:"grid", gridTemplateColumns:"repeat(4, 1fr)", gap:16, marginBottom:48 }}>
+            {[{ v:"14+", l:"Units Installed" },{ v:"6", l:"Projects Delivered" },{ v:"3", l:"Cities" },{ v:"4", l:"Sectors Served" }].map((s,i) => (
+              <div key={i} style={{ background:C.card, borderRadius:12, padding:"24px 16px", border:`1px solid ${C.steel}`, textAlign:"center" }}>
+                <div style={{ fontFamily:serif, fontSize:30, color:C.gold }}>{s.v}</div>
+                <div style={{ fontSize:11, color:C.greyL, letterSpacing:1.5, fontWeight:600, marginTop:4 }}>{s.l.toUpperCase()}</div>
+              </div>
+            ))}
+          </div></R>
+          {/* Project cards */}
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(320px, 1fr))", gap:20 }}>
+            {PROJECTS.map((p,i) => (
+              <R key={i} delay={i*0.08}>
+                <div style={{ background:C.card, borderRadius:14, padding:"28px 24px", border:`1px solid ${C.steel}`, transition:"all 0.3s" }}
+                  onMouseEnter={e=>e.currentTarget.style.borderColor=C.gold+"44"} onMouseLeave={e=>e.currentTarget.style.borderColor=C.steel}>
+                  <div style={{ display:"flex", justifyContent:"space-between", marginBottom:14 }}>
+                    <span style={{ fontSize:11, fontWeight:600, padding:"4px 14px", borderRadius:20, background: p.status==="Completed"?"#1B5E2033":p.status==="In Progress"?`${C.gold}22`:`${C.cyan}22`, color: p.status==="Completed"?"#4CAF50":p.status==="In Progress"?C.gold:C.cyan }}>{p.status}</span>
+                    <span style={{ fontSize:12, color:C.grey, fontWeight:600 }}>{p.year}</span>
+                  </div>
+                  <h3 style={{ fontSize:18, fontWeight:700, color:C.white, margin:"0 0 6px" }}>{p.name}</h3>
+                  <p style={{ fontSize:13, color:C.greyL, margin:"0 0 16px" }}>{p.location}</p>
+                  <div style={{ borderTop:`1px solid ${C.steel}`, paddingTop:14, display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8 }}>
+                    <div><div style={{ fontSize:10, color:C.grey, fontWeight:600, letterSpacing:1 }}>TYPE</div><div style={{ fontSize:12, color:C.white, marginTop:2 }}>{p.type}</div></div>
+                    <div><div style={{ fontSize:10, color:C.grey, fontWeight:600, letterSpacing:1 }}>SCOPE</div><div style={{ fontSize:12, color:C.white, marginTop:2 }}>{p.scope}</div></div>
+                    <div><div style={{ fontSize:10, color:C.grey, fontWeight:600, letterSpacing:1 }}>UNITS</div><div style={{ fontSize:16, fontWeight:800, color:C.cyan, marginTop:2 }}>{p.units}</div></div>
+                  </div>
+                </div>
+              </R>
+            ))}
+          </div>
+        </div>
+      </section>
+      <CTAStrip/>
+    </>
+  );
+
+  /* ═══ PAGE: CONTACT ═══ */
+  const ContactPage = () => (
+    <>
+      <PageHero tag="Get In Touch" title="Contact Us" sub="Our engineering team responds within 24 hours. Let's discuss your project."/>
+      <section style={{ background:C.deep, padding:"80px 24px" }}>
+        <div style={{ maxWidth:1000, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 1fr", gap:40 }}>
+          <R delay={0.1}>
+            <div>
+              <h3 style={{ fontFamily:serif, fontSize:26, color:C.gold, margin:"0 0 24px" }}>Reach Us Directly</h3>
+              {[
+                { icon:"📍", label:"Office Address", value:"Lagos, Nigeria" },
+                { icon:"📞", label:"Phone", value:"+234 800 000 0000" },
+                { icon:"✉️", label:"Email", value:"info@kceeelevators.com" },
+                { icon:"💬", label:"WhatsApp", value:"Available 8am – 8pm WAT" },
+              ].map((c,i) => (
+                <div key={i} style={{ display:"flex", gap:16, marginBottom:24, alignItems:"flex-start" }}>
+                  <div style={{ width:44, height:44, borderRadius:10, background:C.card, border:`1px solid ${C.steel}`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:20, flexShrink:0 }}>{c.icon}</div>
+                  <div><div style={{ fontSize:11, color:C.grey, fontWeight:600, letterSpacing:1, marginBottom:2 }}>{c.label.toUpperCase()}</div><div style={{ fontSize:15, color:C.white, fontWeight:500 }}>{c.value}</div></div>
+                </div>
+              ))}
+              {/* Partner card */}
+              <div style={{ background:`linear-gradient(135deg, ${C.navy}, ${C.steel})`, borderRadius:14, padding:"28px 24px", border:`1px solid ${C.gold}33`, marginTop:24 }}>
+                <h4 style={{ fontSize:16, color:C.gold, margin:"0 0 8px", fontWeight:700 }}>Partner With Us</h4>
+                <p style={{ fontSize:13, color:C.greyL, lineHeight:1.65, margin:"0 0 16px" }}>Developers, contractors, and property managers — we offer partnership models with priority service, technical advisory, and volume pricing.</p>
+                <button onClick={()=>setModal("quote")} style={btnSm(btnO)}>BECOME A PARTNER</button>
+              </div>
+            </div>
+          </R>
+          <R delay={0.2}>
+            <div style={{ background:C.card, borderRadius:16, padding:"36px 32px", border:`1px solid ${C.steel}` }}>
+              <h3 style={{ fontSize:18, fontWeight:700, color:C.white, margin:"0 0 6px" }}>Send an Inquiry</h3>
+              <p style={{ fontSize:13, color:C.greyL, margin:"0 0 24px" }}>Tell us about your project and we'll respond with options.</p>
+              {submitted === "contact" ? (
+                <div style={{ textAlign:"center", padding:32 }}>
+                  <div style={{ fontSize:48, marginBottom:12 }}>✅</div>
+                  <h4 style={{ color:C.gold, fontSize:18, margin:"0 0 8px" }}>Inquiry Sent</h4>
+                  <p style={{ color:C.greyL, fontSize:14 }}>Our team will respond within 24 hours.</p>
+                </div>
+              ) : (
+                <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
+                  {[["name","Full Name","text"],["email","Email","email"],["phone","Phone","tel"],["project","Project / Building","text"]].map(([k,l,t]) => (
+                    <div key={k}><label style={labelS}>{l}</label><input type={t} value={qf[k]} onChange={e=>setQf({...qf,[k]:e.target.value})} style={inputS} onFocus={e=>e.target.style.borderColor=C.gold} onBlur={e=>e.target.style.borderColor=C.steel}/></div>
+                  ))}
+                  <div><label style={labelS}>Message</label><textarea rows={4} value={qf.message} onChange={e=>setQf({...qf,message:e.target.value})} style={{...inputS,resize:"vertical"}} onFocus={e=>e.target.style.borderColor=C.gold} onBlur={e=>e.target.style.borderColor=C.steel}/></div>
+                  <button onClick={()=>setSubmitted("contact")} style={{...btnP,width:"100%"}}>SEND INQUIRY</button>
+                </div>
+              )}
+            </div>
+          </R>
+        </div>
+      </section>
+      {/* Book inspection section */}
+      <section style={{ background:C.bg, padding:"80px 24px" }}>
+        <div style={{ maxWidth:600, margin:"0 auto" }}>
+          <R><SH tag="On-Site Assessment" title="Book a Site Inspection" sub="Our technicians will visit your building to assess requirements and provide a detailed recommendation."/></R>
+          <R delay={0.1}>
+            <div style={{ background:C.card, borderRadius:16, padding:"36px 32px", border:`1px solid ${C.steel}` }}>
+              <InspectionForm/>
+            </div>
+          </R>
+        </div>
+      </section>
+    </>
+  );
+
+  /* ═══ RENDER ═══ */
+  const pages = { home: HomePage, about: AboutPage, services: ServicesPage, products: ProductsPage, solutions: SolutionsPage, projects: ProjectsPage, contact: ContactPage };
+  const Page = pages[page] || HomePage;
+
+  return (
+    <div style={{ fontFamily: font, color: C.white, background: C.deep, minHeight: "100vh", overflowX: "hidden" }}>
+      <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+      <style>{`
+        @keyframes elev{0%,100%{top:10%}50%{top:75%}} @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}} @keyframes pulse{0%,100%{opacity:0.6}50%{opacity:1}} @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+        *{box-sizing:border-box;margin:0}
+        @media(max-width:768px){
+          .hero-grid{grid-template-columns:1fr!important;text-align:center}
+          .hero-illust{display:none!important}
+          .hero-stats{justify-content:center}
+          .hero-buttons{justify-content:center}
+          .hero-h1{font-size:38px!important}
+          .nav-links{display:none!important}
+          .mob-btn{display:flex!important}
+        }
+      `}</style>
+
+      {/* ═══ NAVBAR ═══ */}
+      <nav style={{ position:"fixed", top:0, left:0, right:0, zIndex:500, background: scrollY>60||page!=="home" ? "rgba(4,11,20,0.96)" : "transparent", backdropFilter: scrollY>60||page!=="home" ? "blur(16px)" : "none", borderBottom: scrollY>60||page!=="home" ? `1px solid ${C.steel}` : "1px solid transparent", transition:"all 0.4s", padding:"0 24px" }}>
+        <div style={{ maxWidth:1200, margin:"0 auto", display:"flex", justifyContent:"space-between", alignItems:"center", height:68 }}>
+          <div style={{ display:"flex", alignItems:"center", gap:12, cursor:"pointer" }} onClick={()=>nav("home")}>
+            <img src={LOGO} alt="KCEE" style={{ width:40, height:40, borderRadius:8, objectFit:"cover" }}/>
+            <div><div style={{ fontWeight:800, fontSize:14, letterSpacing:3, color:C.gold, lineHeight:1.2 }}>KCEE ELEVATORS</div><div style={{ fontSize:8, letterSpacing:2.5, color:C.greyL, fontWeight:500 }}>GLOBAL LIMITED</div></div>
+          </div>
+          <div className="nav-links" style={{ display:"flex", gap:20, alignItems:"center" }}>
+            {NAV.map(n => (
+              <span key={n.page} onClick={()=>nav(n.page)} style={{ cursor:"pointer", color: page===n.page ? C.gold : C.greyL, fontSize:12, fontWeight:600, letterSpacing:0.8, transition:"color 0.2s", textTransform:"uppercase", borderBottom: page===n.page ? `2px solid ${C.gold}` : "2px solid transparent", paddingBottom:4 }}
+                onMouseEnter={e=>e.target.style.color=C.gold} onMouseLeave={e=>{if(page!==n.page)e.target.style.color=C.greyL}}>{n.label}</span>
+            ))}
+            <button onClick={()=>setModal("quote")} style={{...btnP, padding:"8px 20px", fontSize:11}}>GET QUOTE</button>
+          </div>
+          <button className="mob-btn" onClick={()=>setMobileMenu(!mobileMenu)} style={{ display:"none", background:"none", border:"none", color:C.gold, fontSize:24, cursor:"pointer", alignItems:"center" }}>{mobileMenu?"✕":"☰"}</button>
+        </div>
+        {mobileMenu && <div style={{ background:C.deep, padding:"16px 24px", display:"flex", flexDirection:"column", gap:14, borderTop:`1px solid ${C.steel}` }}>
+          {NAV.map(n => <span key={n.page} onClick={()=>nav(n.page)} style={{ color: page===n.page ? C.gold : C.greyL, fontSize:15, fontWeight:600, cursor:"pointer" }}>{n.label}</span>)}
+          <button onClick={()=>{setModal("quote");setMobileMenu(false)}} style={{...btnP, textAlign:"center"}}>GET QUOTE</button>
+        </div>}
+      </nav>
+
+      {/* ═══ PAGE CONTENT ═══ */}
+      <Page/>
+
+      {/* ═══ FOOTER ═══ */}
+      <footer style={{ background:C.deep, borderTop:`1px solid ${C.steel}`, padding:"60px 24px 32px" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto" }}>
+          <div style={{ display:"grid", gridTemplateColumns:"2.2fr 1fr 1fr 1fr", gap:40, marginBottom:48 }}>
+            <div>
+              <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:16 }}>
+                <img src={LOGO} alt="KCEE" style={{ width:36, height:36, borderRadius:6, objectFit:"cover" }}/>
+                <span style={{ fontWeight:800, fontSize:14, letterSpacing:3, color:C.gold }}>KCEE ELEVATORS</span>
+              </div>
+              <p style={{ fontSize:13, color:C.grey, lineHeight:1.7, maxWidth:280 }}>Premium vertical mobility solutions for modern infrastructure in Nigeria and across Africa.</p>
+            </div>
+            <div>
+              <h4 style={{ fontSize:11, fontWeight:700, color:C.gold, letterSpacing:2, marginBottom:16 }}>PAGES</h4>
+              {NAV.map(n => <div key={n.page} onClick={()=>nav(n.page)} style={{ fontSize:13, color:C.greyL, marginBottom:8, cursor:"pointer", transition:"color 0.2s" }} onMouseEnter={e=>e.target.style.color=C.gold} onMouseLeave={e=>e.target.style.color=C.greyL}>{n.label}</div>)}
+            </div>
+            <div>
+              <h4 style={{ fontSize:11, fontWeight:700, color:C.gold, letterSpacing:2, marginBottom:16 }}>SERVICES</h4>
+              {SERVICES.map(s => <div key={s.id} onClick={()=>nav("services")} style={{ fontSize:13, color:C.greyL, marginBottom:8, cursor:"pointer" }}>{s.title}</div>)}
+            </div>
+            <div>
+              <h4 style={{ fontSize:11, fontWeight:700, color:C.gold, letterSpacing:2, marginBottom:16 }}>CONNECT</h4>
+              {["LinkedIn","Instagram","Facebook","WhatsApp"].map(s => <div key={s} style={{ fontSize:13, color:C.greyL, marginBottom:8, cursor:"pointer" }}>{s}</div>)}
+              <button onClick={()=>setModal("quote")} style={{...btnSm(btnP), marginTop:12, width:"100%", textAlign:"center"}}>GET QUOTE</button>
+            </div>
+          </div>
+          <div style={{ borderTop:`1px solid ${C.steel}`, paddingTop:24, display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:12 }}>
+            <div style={{ fontSize:12, color:C.grey }}>© 2026 KCEE Elevators Global Limited. All rights reserved.</div>
+            <div style={{ fontSize:11, color:C.grey }}>CAC Registered · Safety Certified · ISO Aligned</div>
+          </div>
+          <div style={{ textAlign:"center", marginTop:20, paddingTop:16, borderTop:`1px solid ${C.steel}44` }}>
+            <span style={{ fontSize:11, color:C.grey, letterSpacing:0.5 }}>Designed, developed & managed by </span>
+            <span style={{ fontSize:11, color:C.gold, fontWeight:700, letterSpacing:1.5 }}>SERIALSETS</span>
+            <span style={{ fontSize:11, color:C.grey, fontStyle:"italic", marginLeft:6 }}>— Exactly Yours.</span>
+          </div>
+        </div>
+      </footer>
+
+      {/* ═══ MODALS ═══ */}
+      <Modal open={modal==="quote"} onClose={()=>{setModal(null);setSubmitted(null)}} title="Request Elevator Quote"><QuoteForm/></Modal>
+      <Modal open={modal==="inspection"} onClose={()=>{setModal(null);setSubmitted(null)}} title="Book Site Inspection"><InspectionForm/></Modal>
+
+      {/* ═══ FLOATING WHATSAPP ═══ */}
+      <div onClick={()=>window.open("https://wa.me/2348000000000?text=Hello%20KCEE%20Elevators%2C%20I%27d%20like%20to%20discuss%20a%20project.","_blank")}
+        style={{ position:"fixed", bottom:24, right:24, zIndex:400, width:56, height:56, borderRadius:"50%", background:"#25D366", display:"flex", alignItems:"center", justifyContent:"center", cursor:"pointer", boxShadow:"0 4px 20px rgba(37,211,102,0.4)", transition:"transform 0.3s", fontSize:28 }}
+        onMouseEnter={e=>e.currentTarget.style.transform="scale(1.1)"} onMouseLeave={e=>e.currentTarget.style.transform="scale(1)"}>
+        💬
+      </div>
+    </div>
+  );
+}
+
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(React.createElement(KCEEWebsite));
+  </script>
+</body>
+</html>
