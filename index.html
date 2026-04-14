@@ -68,7 +68,7 @@ function R({ children, delay = 0, style = {} }) {
 const btnP = { background: `linear-gradient(135deg, ${C.gold}, ${C.goldL})`, color: C.navy, border: "none", padding: "14px 32px", borderRadius: 8, fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: font, letterSpacing: 1.2, boxShadow: `0 4px 24px ${C.gold}33`, transition: "all 0.3s" };
 const btnO = { background: "transparent", color: C.gold, border: `2px solid ${C.gold}`, padding: "12px 28px", borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: "pointer", fontFamily: font, letterSpacing: 1, transition: "all 0.3s" };
 const btnSm = (s) => ({ ...s, padding: "10px 22px", fontSize: 12 });
-const inputS = { width: "100%", padding: "12px 16px", background: "rgba(10,31,63,0.6)", border: `1px solid ${C.steel}`, borderRadius: 8, color: C.white, fontSize: 14, fontFamily: font, outline: "none", boxSizing: "border-box", transition: "border-color 0.2s" };
+const inputS = { width: "100%", padding: "12px 16px", background: "rgba(10,31,63,0.6)", border: `1px solid ${C.steel}`, borderRadius: 8, color: C.white, fontSize: 16, fontFamily: font, outline: "none", boxSizing: "border-box", transition: "border-color 0.2s" };
 const labelS = { fontSize: 11, color: C.greyL, fontWeight: 600, display: "block", marginBottom: 4, fontFamily: font, letterSpacing: 0.5, textTransform: "uppercase" };
 
 /* ─── Section Heading ─── */
@@ -104,7 +104,7 @@ function Modal({ open, onClose, title, children }) {
   return (
     <div style={{ position: "fixed", inset: 0, zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }} onClick={onClose}>
       <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.75)", backdropFilter: "blur(8px)" }} />
-      <div onClick={e => e.stopPropagation()} style={{ position: "relative", background: `linear-gradient(160deg, ${C.deep}, ${C.steel})`, borderRadius: 16, padding: "36px 32px", maxWidth: 520, width: "100%", border: `1px solid ${C.gold}33`, boxShadow: "0 24px 80px rgba(0,0,0,0.6)", maxHeight: "85vh", overflowY: "auto" }}>
+      <div onClick={e => e.stopPropagation()} className="modal-inner" style={{ position: "relative", background: `linear-gradient(160deg, ${C.deep}, ${C.steel})`, borderRadius: 16, padding: "36px 32px", maxWidth: 520, width: "100%", border: `1px solid ${C.gold}33`, boxShadow: "0 24px 80px rgba(0,0,0,0.6)", maxHeight: "85vh", overflowY: "auto" }}>
         <button onClick={onClose} style={{ position: "absolute", top: 14, right: 18, background: "none", border: "none", color: C.grey, fontSize: 22, cursor: "pointer" }}>✕</button>
         <h2 style={{ fontFamily: serif, fontSize: 26, color: C.gold, margin: "0 0 6px" }}>{title}</h2>
         <div style={{ width: 50, height: 3, background: C.cyan, borderRadius: 2, marginBottom: 24 }} />
@@ -362,7 +362,7 @@ function KCEEWebsite() {
       <PageHero tag="Who We Are" title="About KCEE Elevators" sub="A Nigerian-based engineering company delivering world-class vertical mobility solutions across Africa."/>
       <section style={{ background:C.deep, padding:"80px 24px" }}>
         <div style={{ maxWidth:900, margin:"0 auto" }}>
-          <R><div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:40 }}>
+          <R><div className="about-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:40 }}>
             <div>
               <h3 style={{ fontFamily:serif, fontSize:26, color:C.gold, margin:"0 0 16px" }}>Company Overview</h3>
               <p style={{ fontSize:14, color:C.greyL, lineHeight:1.8 }}>KCEE Elevators Global Limited is a Nigerian-based engineering and vertical mobility solutions company specializing in the importation, installation, maintenance, and modernization of elevator and escalator systems.</p>
@@ -407,7 +407,7 @@ function KCEEWebsite() {
       <section style={{ background:C.bg, padding:"80px 24px" }}>
         <div style={{ maxWidth:900, margin:"0 auto" }}>
           <R><SH tag="Supply Chain" title="Global Sourcing Advantage"/></R>
-          <R delay={0.1}><div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:20 }}>
+          <R delay={0.1}><div className="sourcing-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:20 }}>
             {[
               { flag:"🇹🇷", country:"Türkiye", desc:"High-quality engineering systems with European standards compliance." },
               { flag:"🇨🇳", country:"China", desc:"Cost-effective, scalable solutions with rapid production timelines." },
@@ -434,7 +434,7 @@ function KCEEWebsite() {
         <div style={{ maxWidth:1000, margin:"0 auto", display:"flex", flexDirection:"column", gap:40 }}>
           {SERVICES.map((s,i) => (
             <R key={i} delay={i*0.1}>
-              <div style={{ display:"grid", gridTemplateColumns: i%2===0 ? "1fr 1.4fr" : "1.4fr 1fr", gap:32, alignItems:"center" }}>
+              <div className="service-row" style={{ display:"grid", gridTemplateColumns: i%2===0 ? "1fr 1.4fr" : "1.4fr 1fr", gap:32, alignItems:"center" }}>
                 {i%2===1 && <div style={{ background:C.card, borderRadius:16, padding:"36px 32px", border:`1px solid ${C.steel}` }}>
                   <p style={{ fontSize:15, color:C.greyL, lineHeight:1.75, margin:"0 0 24px" }}>{s.desc}</p>
                   <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
@@ -472,7 +472,7 @@ function KCEEWebsite() {
         <div style={{ maxWidth:1000, margin:"0 auto", display:"flex", flexDirection:"column", gap:32 }}>
           {PRODUCTS.map((p,i) => (
             <R key={i} delay={i*0.08}>
-              <div style={{ background:C.card, borderRadius:16, padding:"36px 32px", border:`1px solid ${C.steel}`, display:"grid", gridTemplateColumns:"1fr 320px", gap:32, alignItems:"center" }}>
+              <div className="product-row" style={{ background:C.card, borderRadius:16, padding:"36px 32px", border:`1px solid ${C.steel}`, display:"grid", gridTemplateColumns:"1fr 320px", gap:32, alignItems:"center" }}>
                 <div>
                   <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:16 }}>
                     <span style={{ fontSize:32 }}>{p.icon}</span>
@@ -509,7 +509,7 @@ function KCEEWebsite() {
           {SOLUTIONS.map((s,i) => (
             <R key={i} delay={i*0.1}>
               <div style={{ background:C.card, borderRadius:16, padding:"40px 36px", border:`1px solid ${C.steel}` }}>
-                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:20 }}>
+                <div className="solutions-header" style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:20 }}>
                   <div style={{ display:"flex", alignItems:"center", gap:14 }}>
                     <span style={{ fontSize:40 }}>{s.icon}</span>
                     <h3 style={{ fontFamily:serif, fontSize:26, color:C.white, margin:0 }}>{s.sector}</h3>
@@ -537,7 +537,7 @@ function KCEEWebsite() {
       <section style={{ background:C.deep, padding:"80px 24px" }}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           {/* Stats */}
-          <R><div style={{ display:"grid", gridTemplateColumns:"repeat(4, 1fr)", gap:16, marginBottom:48 }}>
+          <R><div className="proj-stats" style={{ display:"grid", gridTemplateColumns:"repeat(4, 1fr)", gap:16, marginBottom:48 }}>
             {[{ v:"14+", l:"Units Installed" },{ v:"6", l:"Projects Delivered" },{ v:"3", l:"Cities" },{ v:"4", l:"Sectors Served" }].map((s,i) => (
               <div key={i} style={{ background:C.card, borderRadius:12, padding:"24px 16px", border:`1px solid ${C.steel}`, textAlign:"center" }}>
                 <div style={{ fontFamily:serif, fontSize:30, color:C.gold }}>{s.v}</div>
@@ -577,7 +577,7 @@ function KCEEWebsite() {
     <>
       <PageHero tag="Get In Touch" title="Contact Us" sub="Our engineering team responds within 24 hours. Let's discuss your project."/>
       <section style={{ background:C.deep, padding:"80px 24px" }}>
-        <div style={{ maxWidth:1000, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 1fr", gap:40 }}>
+        <div className="contact-grid" style={{ maxWidth:1000, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 1fr", gap:40 }}>
           <R delay={0.1}>
             <div>
               <h3 style={{ fontFamily:serif, fontSize:26, color:C.gold, margin:"0 0 24px" }}>Reach Us Directly</h3>
@@ -648,13 +648,31 @@ function KCEEWebsite() {
         @keyframes elev{0%,100%{top:10%}50%{top:75%}} @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}} @keyframes pulse{0%,100%{opacity:0.6}50%{opacity:1}} @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
         *{box-sizing:border-box;margin:0}
         @media(max-width:768px){
-          .hero-grid{grid-template-columns:1fr!important;text-align:center}
+          .hero-grid{grid-template-columns:1fr!important;text-align:center;padding:80px 16px 60px!important}
           .hero-illust{display:none!important}
           .hero-stats{justify-content:center}
           .hero-buttons{justify-content:center}
           .hero-h1{font-size:38px!important}
           .nav-links{display:none!important}
           .mob-btn{display:flex!important}
+          .footer-grid{grid-template-columns:1fr!important;gap:28px!important}
+          .contact-grid{grid-template-columns:1fr!important;gap:28px!important}
+          .about-grid{grid-template-columns:1fr!important;gap:24px!important}
+          .sourcing-grid{grid-template-columns:1fr!important;gap:16px!important}
+          .service-row{grid-template-columns:1fr!important;gap:20px!important}
+          .product-row{grid-template-columns:1fr!important;gap:20px!important;padding:24px 20px!important}
+          .proj-stats{grid-template-columns:1fr 1fr!important;gap:12px!important}
+          .solutions-header{flex-direction:column!important;gap:10px!important}
+        }
+        @media(max-width:480px){
+          .hero-h1{font-size:30px!important}
+          .proj-stats{grid-template-columns:1fr 1fr!important}
+          .footer-grid{grid-template-columns:1fr!important}
+          .contact-grid{grid-template-columns:1fr!important}
+          .sourcing-grid{grid-template-columns:1fr!important}
+          .service-row{grid-template-columns:1fr!important}
+          .product-row{grid-template-columns:1fr!important;padding:20px 16px!important}
+          .modal-inner{padding:24px 16px!important}
         }
       `}</style>
 
@@ -686,7 +704,7 @@ function KCEEWebsite() {
       {/* ═══ FOOTER ═══ */}
       <footer style={{ background:C.deep, borderTop:`1px solid ${C.steel}`, padding:"60px 24px 32px" }}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
-          <div style={{ display:"grid", gridTemplateColumns:"2.2fr 1fr 1fr 1fr", gap:40, marginBottom:48 }}>
+          <div className="footer-grid" style={{ display:"grid", gridTemplateColumns:"2.2fr 1fr 1fr 1fr", gap:40, marginBottom:48 }}>
             <div>
               <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:16 }}>
                 <img src={LOGO} alt="KCEE" style={{ width:36, height:36, borderRadius:6, objectFit:"cover" }}/>
