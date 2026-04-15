@@ -137,20 +137,81 @@ const SERVICES = [
 ];
 
 const PRODUCTS = [
-  { name: "Home / Residential Elevators", desc: "Compact, elegant lift solutions designed for private homes, duplexes, mansions, and luxury villas. Quiet operation, minimal shaft requirements, and premium cabin finishes that blend seamlessly with interior design. Available in hydraulic, traction, and vacuum-driven configurations.", specs: [["Capacity", "250 – 630 kg"], ["Speed", "0.3 – 0.6 m/s"], ["Stops", "2 – 6 floors"], ["Drive", "Hydraulic / Traction / Vacuum"]], color: "#E8B84B", icon: "🏠" },
-  { name: "Passenger Elevators", desc: "Smooth, quiet vertical transport for residential towers, commercial buildings, and mixed-use developments. Available in geared and gearless traction configurations, machine-room and machine-room-less (MRL) designs.", specs: [["Capacity", "630 – 2,000 kg"], ["Speed", "1.0 – 4.0 m/s"], ["Stops", "Up to 40 floors"], ["Drive", "Geared / Gearless"]], color: C.cyan, icon: "🏢" },
-  { name: "Freight Elevators", desc: "Heavy-duty lifting solutions for warehouses, industrial facilities, logistics centres, and commercial loading docks. Reinforced car structures with wide door openings for pallet and equipment access.", specs: [["Capacity", "2,000 – 10,000 kg"], ["Speed", "0.5 – 1.5 m/s"], ["Door Width", "Up to 3,000 mm"], ["Drive", "Geared Traction"]], color: C.gold, icon: "📦" },
-  { name: "Hospital / Bed Elevators", desc: "Spacious bed elevators with ultra-smooth acceleration, wide door openings, priority call systems, and antibacterial finishes designed for 24/7 healthcare operations.", specs: [["Capacity", "1,600 – 2,500 kg"], ["Speed", "1.0 – 2.5 m/s"], ["Door Width", "1,400 mm+"], ["Features", "Priority call, UPS"]], color: "#4CAF50", icon: "🏥" },
-  { name: "Panoramic Glass Elevators", desc: "Glass-walled elevators that combine precision engineering with architectural impact. Ideal for hotels, malls, and landmark buildings seeking visual distinction and guest experience.", specs: [["Capacity", "630 – 1,600 kg"], ["Speed", "1.0 – 2.5 m/s"], ["Glass", "Laminated safety"], ["Lighting", "LED integrated"]], color: "#AB47BC", icon: "✨" },
-  { name: "Escalators & Moving Walkways", desc: "High-traffic people-moving solutions for shopping malls, airports, transit stations, and commercial complexes. Energy-efficient motors with auto-start technology and safety sensors.", specs: [["Capacity", "6,000 – 9,000 p/hr"], ["Speed", "0.5 m/s"], ["Rise", "Up to 12 metres"], ["Width", "600 / 800 / 1,000 mm"]], color: "#FF7043", icon: "🔄" },
+  { name: "Home / Residential Elevators", category: "Residential",
+    img: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=600&q=80",
+    badge: "Most Popular", badgeColor: "#E8B84B",
+    desc: "Compact, elegant lift solutions designed for private homes, duplexes, mansions, and luxury villas. Whisper-quiet operation with minimal shaft requirements and premium cabin finishes that blend seamlessly with any interior design. Available in hydraulic, traction, and vacuum-driven configurations to suit every home layout.",
+    highlights: ["Whisper-quiet operation", "Minimal shaft space required", "Custom cabin finishes", "Single-phase power"],
+    specs: [["Capacity", "250 – 630 kg"], ["Speed", "0.3 – 0.6 m/s"], ["Stops", "2 – 6 floors"], ["Drive", "Hydraulic / Traction / Vacuum"], ["Cabin Width", "From 800 mm"], ["Power Supply", "Single phase 220V"]],
+    color: "#E8B84B", icon: "🏠" },
+  { name: "Passenger Elevators", category: "Commercial",
+    img: "https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=600&q=80",
+    badge: "Best Seller", badgeColor: "#00BFDD",
+    desc: "Smooth, quiet vertical transport for residential towers, commercial buildings, and mixed-use developments. Available in geared and gearless traction configurations, machine-room-less (MRL) designs with smart destination dispatch and energy-regenerative drives for tall buildings.",
+    highlights: ["High-speed MRL design", "Smart destination dispatch", "Up to 40 floors", "Energy regenerative drive"],
+    specs: [["Capacity", "630 – 2,000 kg"], ["Speed", "1.0 – 4.0 m/s"], ["Stops", "Up to 40 floors"], ["Drive", "Geared / Gearless Traction"], ["Door Opening", "800 – 1,100 mm"], ["Control", "Microprocessor VVVF"]],
+    color: "#00BFDD", icon: "🏢" },
+  { name: "Freight Elevators", category: "Industrial",
+    img: "https://images.unsplash.com/photo-1565793979049-c50a4c472882?auto=format&fit=crop&w=600&q=80",
+    badge: null, badgeColor: null,
+    desc: "Heavy-duty lifting solutions for warehouses, industrial facilities, logistics centres, and commercial loading docks. Reinforced car structures with wide door openings designed for pallet, forklift, and oversized equipment access — built for demanding 24/7 industrial operations.",
+    highlights: ["Up to 10,000 kg capacity", "Extra-wide door openings", "Reinforced car structure", "24/7 duty rated"],
+    specs: [["Capacity", "2,000 – 10,000 kg"], ["Speed", "0.5 – 1.5 m/s"], ["Door Width", "Up to 3,000 mm"], ["Drive", "Geared Traction"], ["Floor Finish", "Anti-slip heavy duty"], ["Control", "Simplex / Duplex"]],
+    color: "#C5A044", icon: "📦" },
+  { name: "Hospital / Bed Elevators", category: "Healthcare",
+    img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=80",
+    badge: "Certified", badgeColor: "#4CAF50",
+    desc: "Spacious bed elevators with ultra-smooth acceleration, extra-wide door openings, priority call systems, and antibacterial finishes engineered for 24/7 healthcare operations. Integrated UPS backup ensures uninterrupted vertical access during power interruptions.",
+    highlights: ["Ultra-smooth acceleration", "UPS backup power", "Priority call system", "Antibacterial surfaces"],
+    specs: [["Capacity", "1,600 – 2,500 kg"], ["Speed", "1.0 – 2.5 m/s"], ["Door Width", "1,400 mm+"], ["Features", "Priority call, UPS"], ["Cabin Depth", "2,300 mm minimum"], ["Compliance", "Healthcare certified"]],
+    color: "#4CAF50", icon: "🏥" },
+  { name: "Panoramic Glass Elevators", category: "Commercial",
+    img: "https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?auto=format&fit=crop&w=600&q=80",
+    badge: "Premium", badgeColor: "#AB47BC",
+    desc: "Glass-walled elevators that combine precision engineering with architectural impact. Ideal for hotels, shopping malls, and landmark buildings seeking visual distinction. Frameless glass panels and integrated LED lighting create breathtaking visual statements that become part of the building's identity.",
+    highlights: ["Frameless glass cabin", "Integrated LED lighting", "Architectural centrepiece", "Custom frame finishes"],
+    specs: [["Capacity", "630 – 1,600 kg"], ["Speed", "1.0 – 2.5 m/s"], ["Glass", "Laminated safety glass"], ["Lighting", "LED integrated"], ["Frame Finish", "SS / Powder coated"], ["Shaft Type", "Glass or concrete"]],
+    color: "#AB47BC", icon: "✨" },
+  { name: "Escalators & Moving Walkways", category: "Transport",
+    img: "https://images.unsplash.com/photo-1519861531473-9200262188bf?auto=format&fit=crop&w=600&q=80",
+    badge: "High Capacity", badgeColor: "#FF7043",
+    desc: "High-traffic people-moving solutions for shopping malls, airports, transit stations, and commercial complexes. Energy-efficient motors with intelligent auto-start technology, full-length safety sensors, and low-energy standby mode for sustainable, high-volume operations.",
+    highlights: ["9,000 persons/hr capacity", "Auto-start motion sensors", "Energy standby mode", "Full safety certification"],
+    specs: [["Capacity", "6,000 – 9,000 p/hr"], ["Speed", "0.5 m/s"], ["Rise", "Up to 12 metres"], ["Width", "600 / 800 / 1,000 mm"], ["Inclination", "30° / 35°"], ["Step Material", "Aluminium alloy"]],
+    color: "#FF7043", icon: "🔄" },
 ];
 
 const SOLUTIONS = [
-  { sector: "Private Residences", icon: "🏡", stat: "100%", statL: "bespoke designs", desc: "Luxury home elevators for private villas, duplexes, mansions, and high-end residential estates. We deliver compact, whisper-quiet lift systems that integrate seamlessly with your home architecture — from modern minimalist glass cabins to classic wood-panelled interiors. Minimal shaft requirements, low energy consumption, and installation with minimal disruption to your home.", points: ["Compact designs for existing homes and new builds", "Hydraulic, traction, and vacuum-driven options", "Custom cabin finishes — glass, wood, marble, steel", "Wheelchair-accessible and elderly-friendly configurations"] },
-  { sector: "Real Estate & Developers", icon: "🏗", stat: "60%", statL: "of our projects", desc: "End-to-end elevator solutions for residential towers, gated communities, and mixed-use developments. We work with developers from architectural design phase through handover, ensuring lift specifications match building class, traffic analysis, and buyer expectations.", points: ["Early-stage shaft design consultation", "Multi-unit bulk pricing for large developments", "Phased delivery aligned with construction schedule", "After-sales maintenance packages included"] },
-  { sector: "Hotels & Hospitality", icon: "🏨", stat: "5-Star", statL: "grade solutions", desc: "Premium passenger and service elevators that reflect your brand's standard. Quiet operation, elegant cabin finishes, priority floor access for VIP service, and panoramic options for landmark lobbies that become part of the guest experience.", points: ["Panoramic elevators for lobby impact", "Service lifts with separate access", "Custom cabin finishes to match interior design", "Priority VIP floor access systems"] },
-  { sector: "Hospitals & Healthcare", icon: "🏥", stat: "24/7", statL: "operation ready", desc: "Certified bed elevators, service lifts, and emergency priority systems designed for round-the-clock healthcare operations. Wide doors, smooth acceleration, backup power integration, and antibacterial surfaces.", points: ["Bed/stretcher-compatible car dimensions", "Emergency priority override systems", "UPS and backup power integration", "Antibacterial cabin finishes"] },
-  { sector: "Corporate & Commercial", icon: "🏢", stat: "4.0 m/s", statL: "speeds available", desc: "High-speed passenger elevators, smart destination dispatch, and energy-efficient systems for office towers, banks, government buildings, and commercial complexes. Scalable solutions across building height and peak-hour traffic demands.", points: ["Destination dispatch for traffic optimization", "High-speed systems for tall buildings", "Energy-efficient regenerative drives", "Access control and security integration"] },
+  { sector: "Private Residences", icon: "🏡", stat: "100%", statL: "Bespoke Designs",
+    img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
+    color: "#E8B84B",
+    desc: "Luxury home elevators for private villas, duplexes, mansions, and high-end residential estates. We deliver compact, whisper-quiet lift systems that integrate seamlessly with your home architecture — from modern minimalist glass cabins to classic wood-panelled interiors. Minimal shaft requirements, low energy consumption, and installation with minimal disruption to your household.",
+    points: ["Compact designs for existing homes and new builds", "Hydraulic, traction, and vacuum-driven options", "Custom finishes — glass, wood, marble, stainless steel", "Wheelchair-accessible and elderly-friendly configurations"],
+    benefits: ["3–5 day installation timeline", "Minimal structural changes needed", "Remote diagnostic monitoring", "10-year structural warranty"] },
+  { sector: "Real Estate & Developers", icon: "🏗", stat: "60%", statL: "Of Our Projects",
+    img: "https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=800&q=80",
+    color: "#00BFDD",
+    desc: "End-to-end elevator solutions for residential towers, gated communities, and mixed-use developments. We partner with developers from the architectural design phase through commissioning and handover — ensuring lift specifications match building class, traffic analysis, and buyer expectations across every price tier.",
+    points: ["Early-stage shaft design consultation", "Multi-unit bulk pricing for large developments", "Phased delivery aligned with construction schedule", "After-sales maintenance packages included"],
+    benefits: ["Dedicated project manager assigned", "Traffic analysis & load calculation", "Documentation for regulatory approval", "Priority support through construction"] },
+  { sector: "Hotels & Hospitality", icon: "🏨", stat: "5-Star", statL: "Grade Solutions",
+    img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
+    color: "#AB47BC",
+    desc: "Premium passenger and service elevators engineered to reflect your brand's standard. Whisper-quiet operation, bespoke cabin finishes, priority floor access for VIP guests, and panoramic glass options for landmark lobbies that transform a functional lift into part of the guest experience.",
+    points: ["Panoramic elevators for lobby impact", "Separate service lifts with back-of-house access", "Bespoke cabin finishes matched to interior design", "Priority VIP floor access and key-switch control"],
+    benefits: ["Luxury cabin design consultation", "Noise levels below 55 dB", "Minimal vibration — glass of water test certified", "24/7 premium maintenance SLA available"] },
+  { sector: "Hospitals & Healthcare", icon: "🏥", stat: "24/7", statL: "Operation Ready",
+    img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80",
+    color: "#4CAF50",
+    desc: "Certified bed elevators, service lifts, and emergency priority systems designed for continuous healthcare operations. Wide car openings, ultra-smooth acceleration, integrated UPS backup power, and antibacterial surfaces ensure patient safety and compliance with healthcare facility standards.",
+    points: ["Bed/stretcher-compatible car dimensions (2,300 mm+)", "Emergency priority override — ambulance mode", "UPS and backup generator integration", "Antibacterial cabin finishes and handrails"],
+    benefits: ["Healthcare facility compliance documentation", "Infection-control compliant surfaces", "Automatic fault reporting system", "4-hour emergency response SLA"] },
+  { sector: "Corporate & Commercial", icon: "🏢", stat: "4.0 m/s", statL: "Top Speed Available",
+    img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80",
+    color: "#00BFDD",
+    desc: "High-speed passenger elevators, intelligent destination dispatch, and energy-efficient drive systems for office towers, banks, government buildings, and commercial complexes. Our solutions scale from a single-elevator building to 40-storey multi-shaft installations with full building management system (BMS) integration.",
+    points: ["Destination dispatch for peak-hour traffic optimization", "High-speed gearless traction for tall buildings", "Energy-regenerative drives — up to 30% savings", "Access control, CCTV, and BMS integration"],
+    benefits: ["Traffic flow simulation before installation", "LEED-compatible energy performance", "Remote monitoring dashboard", "Planned maintenance with digital reports"] },
 ];
 
 const PROJECTS = [
@@ -304,19 +365,39 @@ function KCEEWebsite() {
       <section style={{ background:C.deep, padding:"100px 24px" }}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <R><SH tag="Our Range" title="Elevator Products" sub="Complete range of vertical mobility equipment for every building type and budget."/></R>
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(280px, 1fr))", gap:20 }}>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(300px, 1fr))", gap:24 }}>
             {PRODUCTS.slice(0,3).map((p,i) => (
               <R key={i} delay={i*0.1}>
-                <div style={{ background:C.card, borderRadius:14, padding:"28px 24px", border:`1px solid ${C.steel}`, cursor:"pointer", transition:"all 0.3s" }} onClick={()=>nav("products")}
-                  onMouseEnter={e=>{e.currentTarget.style.borderColor=p.color+"55";e.currentTarget.style.transform="translateY(-3px)"}} onMouseLeave={e=>{e.currentTarget.style.borderColor=C.steel;e.currentTarget.style.transform="none"}}>
-                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:12 }}>
-                    <span style={{ fontSize:28 }}>{p.icon}</span>
-                    <div style={{ width:8, height:8, borderRadius:"50%", background:p.color, boxShadow:`0 0 10px ${p.color}44` }}/>
+                <div style={{ background:C.card, borderRadius:16, border:`1px solid ${C.steel}`, cursor:"pointer", transition:"all 0.35s", overflow:"hidden" }} onClick={()=>nav("products")}
+                  onMouseEnter={e=>{e.currentTarget.style.borderColor=p.color+"66";e.currentTarget.style.transform="translateY(-5px)";e.currentTarget.style.boxShadow=`0 16px 40px ${p.color}18`}}
+                  onMouseLeave={e=>{e.currentTarget.style.borderColor=C.steel;e.currentTarget.style.transform="none";e.currentTarget.style.boxShadow="none"}}>
+                  {/* Image */}
+                  <div style={{ position:"relative", height:190, overflow:"hidden", background:C.deep }}>
+                    <img src={p.img} alt={p.name} style={{ width:"100%", height:"100%", objectFit:"cover", transition:"transform 0.5s" }}
+                      onMouseEnter={e=>e.currentTarget.style.transform="scale(1.06)"}
+                      onMouseLeave={e=>e.currentTarget.style.transform="scale(1)"}
+                      onError={e=>{e.currentTarget.style.display="none";e.currentTarget.nextSibling.style.display="flex"}}/>
+                    <div style={{ display:"none", position:"absolute", inset:0, alignItems:"center", justifyContent:"center", fontSize:48, background:`linear-gradient(135deg,${C.deep},${C.navy})` }}>{p.icon}</div>
+                    {/* Gradient overlay */}
+                    <div style={{ position:"absolute", inset:0, background:`linear-gradient(0deg, ${C.card} 0%, transparent 60%)` }}/>
+                    {/* Badge */}
+                    {p.badge && <div style={{ position:"absolute", top:12, left:12, background:p.badgeColor||p.color, color:C.deep, fontSize:10, fontWeight:800, padding:"4px 10px", borderRadius:20, letterSpacing:1 }}>{p.badge}</div>}
+                    {/* Icon circle */}
+                    <div style={{ position:"absolute", bottom:12, right:12, width:36, height:36, borderRadius:"50%", background:`${p.color}22`, border:`1.5px solid ${p.color}66`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:16 }}>{p.icon}</div>
                   </div>
-                  <h3 style={{ fontFamily:serif, fontSize:19, color:C.white, margin:"0 0 8px" }}>{p.name}</h3>
-                  <div style={{ display:"flex", gap:20, marginTop:12 }}>
-                    <div><div style={{ fontSize:10, color:C.grey, letterSpacing:1, fontWeight:600 }}>CAPACITY</div><div style={{ fontSize:13, color:C.white, fontWeight:700 }}>{p.specs[0][1]}</div></div>
-                    <div><div style={{ fontSize:10, color:C.grey, letterSpacing:1, fontWeight:600 }}>SPEED</div><div style={{ fontSize:13, color:C.white, fontWeight:700 }}>{p.specs[1][1]}</div></div>
+                  {/* Content */}
+                  <div style={{ padding:"20px 22px 22px" }}>
+                    <h3 style={{ fontFamily:serif, fontSize:18, color:C.white, margin:"0 0 10px", lineHeight:1.3 }}>{p.name}</h3>
+                    <div style={{ display:"flex", gap:16, marginBottom:14 }}>
+                      <div><div style={{ fontSize:10, color:C.grey, letterSpacing:1, fontWeight:600 }}>CAPACITY</div><div style={{ fontSize:13, color:C.white, fontWeight:700 }}>{p.specs[0][1]}</div></div>
+                      <div><div style={{ fontSize:10, color:C.grey, letterSpacing:1, fontWeight:600 }}>SPEED</div><div style={{ fontSize:13, color:C.white, fontWeight:700 }}>{p.specs[1][1]}</div></div>
+                      <div><div style={{ fontSize:10, color:C.grey, letterSpacing:1, fontWeight:600 }}>STOPS</div><div style={{ fontSize:13, color:C.white, fontWeight:700 }}>{p.specs[2][1]}</div></div>
+                    </div>
+                    <div style={{ display:"flex", flexWrap:"wrap", gap:6 }}>
+                      {p.highlights.slice(0,2).map((h,j) => (
+                        <span key={j} style={{ fontSize:10, padding:"3px 9px", borderRadius:20, background:`${p.color}18`, color:p.color, fontWeight:600, letterSpacing:0.5 }}>{h}</span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </R>
@@ -465,62 +546,176 @@ function KCEEWebsite() {
   );
 
   /* ═══ PAGE: PRODUCTS ═══ */
-  const ProductsPage = () => (
-    <>
-      <PageHero tag="Our Range" title="Elevator Products" sub="Complete equipment range for every building type, traffic requirement, and budget."/>
-      <section style={{ background:C.deep, padding:"80px 24px" }}>
-        <div style={{ maxWidth:1000, margin:"0 auto", display:"flex", flexDirection:"column", gap:32 }}>
-          {PRODUCTS.map((p,i) => (
-            <R key={i} delay={i*0.08}>
-              <div className="product-row" style={{ background:C.card, borderRadius:16, padding:"36px 32px", border:`1px solid ${C.steel}`, display:"grid", gridTemplateColumns:"1fr 320px", gap:32, alignItems:"center" }}>
-                <div>
-                  <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:16 }}>
-                    <span style={{ fontSize:32 }}>{p.icon}</span>
-                    <div style={{ width:8, height:8, borderRadius:"50%", background:p.color, boxShadow:`0 0 12px ${p.color}44` }}/>
-                  </div>
-                  <h3 style={{ fontFamily:serif, fontSize:26, color:C.white, margin:"0 0 12px" }}>{p.name}</h3>
-                  <p style={{ fontSize:14, color:C.greyL, lineHeight:1.75, margin:"0 0 20px" }}>{p.desc}</p>
-                  <button onClick={()=>setModal("quote")} style={btnSm(btnP)}>GET QUOTATION</button>
-                </div>
-                <div style={{ background:`linear-gradient(135deg, ${C.steel}, ${C.navy})`, borderRadius:12, padding:"24px 20px" }}>
-                  <h4 style={{ fontSize:11, color:C.cyan, letterSpacing:2, fontWeight:700, marginBottom:16 }}>SPECIFICATIONS</h4>
-                  {p.specs.map(([k,v],j) => (
-                    <div key={j} style={{ display:"flex", justifyContent:"space-between", padding:"10px 0", borderBottom: j < p.specs.length-1 ? `1px solid ${C.steel}` : "none" }}>
-                      <span style={{ fontSize:12, color:C.grey, fontWeight:600 }}>{k}</span>
-                      <span style={{ fontSize:13, color:C.white, fontWeight:700 }}>{v}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </R>
-          ))}
+  const ProductsPage = () => {
+    const [activeFilter, setActiveFilter] = useState("All");
+    const [expanded, setExpanded] = useState(null);
+    const filters = ["All","Residential","Commercial","Healthcare","Industrial","Transport"];
+    const filtered = activeFilter === "All" ? PRODUCTS : PRODUCTS.filter(p => p.category === activeFilter);
+    return (
+      <>
+        <PageHero tag="Our Range" title="Elevator Products" sub="Complete equipment range for every building type, traffic requirement, and budget."/>
+
+        {/* ── Filter Bar ── */}
+        <div style={{ background:C.navy, padding:"20px 24px", position:"sticky", top:68, zIndex:100, borderBottom:`1px solid ${C.steel}` }}>
+          <div style={{ display:"flex", gap:10, justifyContent:"center", flexWrap:"wrap", maxWidth:700, margin:"0 auto" }}>
+            {filters.map(f => (
+              <button key={f} onClick={()=>{setActiveFilter(f);setExpanded(null);}}
+                style={ f===activeFilter ? {...btnP, padding:"8px 18px", fontSize:12} : {...btnO, padding:"8px 18px", fontSize:12} }>{f}
+              </button>
+            ))}
+          </div>
         </div>
-      </section>
-      <CTAStrip/>
-    </>
-  );
+
+        {/* ── Product Cards ── */}
+        <section style={{ background:C.deep, padding:"60px 24px" }}>
+          <div style={{ maxWidth:1200, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(330px, 1fr))", gap:28 }}>
+            {filtered.map((p,i) => (
+              <R key={p.name} delay={i*0.08}>
+                <div style={{ background:C.card, borderRadius:18, overflow:"hidden", border:`1px solid ${C.steel}`, transition:"all 0.35s", display:"flex", flexDirection:"column" }}
+                  onMouseEnter={e=>{e.currentTarget.style.borderColor=p.color+"66";e.currentTarget.style.transform="translateY(-5px)";e.currentTarget.style.boxShadow=`0 16px 48px ${p.color}22`}}
+                  onMouseLeave={e=>{e.currentTarget.style.borderColor=C.steel;e.currentTarget.style.transform="none";e.currentTarget.style.boxShadow="none"}}>
+
+                  {/* Image */}
+                  <div style={{ position:"relative", height:210, overflow:"hidden", flexShrink:0 }}>
+                    <img src={p.img} alt={p.name}
+                      style={{ width:"100%", height:"100%", objectFit:"cover", transition:"transform 0.6s", display:"block" }}
+                      onMouseEnter={e=>e.target.style.transform="scale(1.07)"}
+                      onMouseLeave={e=>e.target.style.transform="scale(1)"}
+                      onError={e=>{e.target.style.display="none";e.target.nextElementSibling.style.display="flex"}}/>
+                    <div style={{ display:"none", position:"absolute", inset:0, background:`linear-gradient(135deg,${C.navy},${C.steel})`, alignItems:"center", justifyContent:"center", fontSize:72 }}>{p.icon}</div>
+                    <div style={{ position:"absolute", inset:0, background:`linear-gradient(0deg,${C.deep}cc 0%,transparent 55%)` }}/>
+                    {p.badge && <div style={{ position:"absolute", top:14, left:14, background:p.badgeColor, color:C.navy, fontSize:10, fontWeight:800, padding:"4px 12px", borderRadius:20, letterSpacing:1 }}>{p.badge}</div>}
+                    <div style={{ position:"absolute", top:14, right:14, background:"rgba(0,0,0,0.55)", backdropFilter:"blur(4px)", color:C.greyL, fontSize:10, fontWeight:600, padding:"4px 10px", borderRadius:20, letterSpacing:0.5 }}>{p.category}</div>
+                    <div style={{ position:"absolute", bottom:14, left:18, width:42, height:42, borderRadius:"50%", background:p.color+"25", border:`2px solid ${p.color}77`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:20 }}>{p.icon}</div>
+                  </div>
+
+                  {/* Content */}
+                  <div style={{ padding:"22px 22px 20px", display:"flex", flexDirection:"column", flexGrow:1 }}>
+                    <h3 style={{ fontFamily:serif, fontSize:20, color:C.white, margin:"0 0 10px", lineHeight:1.25 }}>{p.name}</h3>
+                    <p style={{ fontSize:13, color:C.greyL, lineHeight:1.75, margin:"0 0 14px" }}>{p.desc}</p>
+
+                    {/* Highlight pills */}
+                    <div style={{ display:"flex", flexWrap:"wrap", gap:6, marginBottom:16 }}>
+                      {p.highlights.map((h,j) => (
+                        <span key={j} style={{ fontSize:11, color:p.color, background:p.color+"18", padding:"3px 10px", borderRadius:12, fontWeight:600, whiteSpace:"nowrap" }}>{h}</span>
+                      ))}
+                    </div>
+
+                    {/* Toggle specs */}
+                    <button onClick={()=>setExpanded(expanded===p.name ? null : p.name)}
+                      style={{ background:"none", border:`1px solid ${C.steel}`, borderRadius:8, color:C.cyan, fontSize:12, fontWeight:600, cursor:"pointer", padding:"7px 14px", marginBottom:14, letterSpacing:0.5, textAlign:"left", transition:"border-color 0.2s" }}
+                      onMouseEnter={e=>e.target.style.borderColor=C.cyan} onMouseLeave={e=>e.target.style.borderColor=C.steel}>
+                      {expanded===p.name ? "▲  Hide Specifications" : "▼  View Specifications"}
+                    </button>
+
+                    {expanded===p.name && (
+                      <div style={{ background:`linear-gradient(135deg,${C.steel}55,${C.navy}99)`, borderRadius:10, padding:"16px", marginBottom:14, border:`1px solid ${C.steel}` }}>
+                        <div style={{ fontSize:10, color:C.cyan, letterSpacing:2.5, fontWeight:700, marginBottom:12 }}>TECHNICAL SPECIFICATIONS</div>
+                        {p.specs.map(([k,v],j) => (
+                          <div key={j} style={{ display:"flex", justifyContent:"space-between", padding:"7px 0", borderBottom: j<p.specs.length-1 ? `1px solid ${C.steel}44` : "none" }}>
+                            <span style={{ fontSize:12, color:C.grey, fontWeight:600 }}>{k}</span>
+                            <span style={{ fontSize:12, color:C.white, fontWeight:700, textAlign:"right", maxWidth:"55%" }}>{v}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    <button onClick={()=>setModal("quote")} style={{...btnSm(btnP), marginTop:"auto", textAlign:"center"}}>GET QUOTATION</button>
+                  </div>
+                </div>
+              </R>
+            ))}
+          </div>
+          {filtered.length === 0 && (
+            <div style={{ textAlign:"center", padding:"60px 24px", color:C.greyL }}>No products in this category.</div>
+          )}
+        </section>
+        <CTAStrip/>
+      </>
+    );
+  };
 
   /* ═══ PAGE: SOLUTIONS ═══ */
   const SolutionsPage = () => (
     <>
       <PageHero tag="Industry Focus" title="Sector Solutions" sub="Tailored elevator solutions for the sectors that need precision, safety, and performance."/>
-      <section style={{ background:C.deep, padding:"80px 24px" }}>
-        <div style={{ maxWidth:1000, margin:"0 auto", display:"flex", flexDirection:"column", gap:32 }}>
+
+      <section style={{ background:C.deep, padding:"60px 24px 80px" }}>
+        <div style={{ maxWidth:1200, margin:"0 auto", display:"flex", flexDirection:"column", gap:4 }}>
           {SOLUTIONS.map((s,i) => (
             <R key={i} delay={i*0.1}>
-              <div style={{ background:C.card, borderRadius:16, padding:"40px 36px", border:`1px solid ${C.steel}` }}>
-                <div className="solutions-header" style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:20 }}>
-                  <div style={{ display:"flex", alignItems:"center", gap:14 }}>
-                    <span style={{ fontSize:40 }}>{s.icon}</span>
-                    <h3 style={{ fontFamily:serif, fontSize:26, color:C.white, margin:0 }}>{s.sector}</h3>
+              <div className="sol-row" style={{ display:"grid", gridTemplateColumns: i%2===0 ? "1fr 1fr" : "1fr 1fr", gap:0, borderRadius: i===0?"18px 18px 0 0":i===SOLUTIONS.length-1?"0 0 18px 18px":"0", overflow:"hidden", marginBottom:3 }}>
+
+                {/* Image side — left on even, right on odd */}
+                {i%2===0 && (
+                  <div style={{ position:"relative", minHeight:380, overflow:"hidden" }}>
+                    <img src={s.img} alt={s.sector}
+                      style={{ width:"100%", height:"100%", objectFit:"cover", position:"absolute", inset:0, transition:"transform 0.6s" }}
+                      onMouseEnter={e=>e.target.style.transform="scale(1.06)"}
+                      onMouseLeave={e=>e.target.style.transform="scale(1)"}
+                      onError={e=>{e.target.style.display="none";}}/>
+                    <div style={{ position:"absolute", inset:0, background:`linear-gradient(90deg,transparent 45%,${C.deep}ee)` }}/>
+                    <div style={{ position:"absolute", inset:0, background:`linear-gradient(0deg,${C.deep}bb 0%,transparent 50%)` }}/>
+                    <div style={{ position:"absolute", bottom:28, left:28 }}>
+                      <div style={{ fontSize:44, marginBottom:6 }}>{s.icon}</div>
+                      <div style={{ fontFamily:serif, fontSize:46, color:s.color, lineHeight:1 }}>{s.stat}</div>
+                      <div style={{ fontSize:11, color:C.greyL, letterSpacing:2, fontWeight:600, marginTop:4 }}>{s.statL.toUpperCase()}</div>
+                    </div>
                   </div>
-                  <div style={{ textAlign:"right" }}><div style={{ fontFamily:serif, fontSize:32, color:C.gold }}>{s.stat}</div><div style={{ fontSize:10, color:C.grey, letterSpacing:1 }}>{s.statL}</div></div>
+                )}
+
+                {/* Content side */}
+                <div style={{ background:C.card, padding:"44px 40px", display:"flex", flexDirection:"column", justifyContent:"center" }}>
+                  <div style={{ fontSize:10, color:C.cyan, letterSpacing:3, fontWeight:700, marginBottom:10 }}>SECTOR SOLUTION</div>
+                  <h3 style={{ fontFamily:serif, fontSize:28, color:C.white, margin:"0 0 14px", lineHeight:1.2 }}>{s.sector}</h3>
+                  <div style={{ width:50, height:3, background:s.color, borderRadius:2, marginBottom:18 }}/>
+                  <p style={{ fontSize:14, color:C.greyL, lineHeight:1.8, margin:"0 0 22px" }}>{s.desc}</p>
+
+                  {/* Key points */}
+                  <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginBottom:22 }}>
+                    {s.points.map((pt,j) => (
+                      <div key={j} style={{ display:"flex", alignItems:"flex-start", gap:8 }}>
+                        <div style={{ width:6, height:6, borderRadius:"50%", background:s.color, marginTop:5, flexShrink:0 }}/>
+                        <span style={{ fontSize:12, color:C.white, lineHeight:1.5 }}>{pt}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Benefits strip */}
+                  <div style={{ background:`${s.color}12`, border:`1px solid ${s.color}33`, borderRadius:10, padding:"14px 16px", marginBottom:22 }}>
+                    <div style={{ fontSize:10, color:s.color, letterSpacing:2, fontWeight:700, marginBottom:10 }}>WHY CHOOSE US FOR THIS SECTOR</div>
+                    <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:6 }}>
+                      {s.benefits.map((b,j) => (
+                        <div key={j} style={{ display:"flex", alignItems:"flex-start", gap:7 }}>
+                          <span style={{ color:s.color, fontSize:12, marginTop:1, flexShrink:0 }}>✓</span>
+                          <span style={{ fontSize:12, color:C.greyL, lineHeight:1.45 }}>{b}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <button onClick={()=>setModal("quote")} style={btnSm(btnP)}>
+                    GET SOLUTION FOR {s.sector.split("&")[0].trim().toUpperCase()}
+                  </button>
                 </div>
-                <p style={{ fontSize:15, color:C.greyL, lineHeight:1.75, margin:"0 0 24px" }}>{s.desc}</p>
-                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10, marginBottom:24 }}>
-                  {s.points.map((p,j) => <div key={j} style={{ display:"flex", alignItems:"flex-start", gap:8 }}><div style={{ width:6, height:6, borderRadius:"50%", background:C.cyan, marginTop:6, flexShrink:0 }}/><span style={{ fontSize:13, color:C.white }}>{p}</span></div>)}
-                </div>
-                <button onClick={()=>setModal("quote")} style={btnSm(btnP)}>GET SOLUTION FOR {s.sector.split("&")[0].trim().toUpperCase()}</button>
+
+                {/* Image side — right on odd */}
+                {i%2===1 && (
+                  <div style={{ position:"relative", minHeight:380, overflow:"hidden" }}>
+                    <img src={s.img} alt={s.sector}
+                      style={{ width:"100%", height:"100%", objectFit:"cover", position:"absolute", inset:0, transition:"transform 0.6s" }}
+                      onMouseEnter={e=>e.target.style.transform="scale(1.06)"}
+                      onMouseLeave={e=>e.target.style.transform="scale(1)"}
+                      onError={e=>{e.target.style.display="none";}}/>
+                    <div style={{ position:"absolute", inset:0, background:`linear-gradient(270deg,transparent 45%,${C.deep}ee)` }}/>
+                    <div style={{ position:"absolute", inset:0, background:`linear-gradient(0deg,${C.deep}bb 0%,transparent 50%)` }}/>
+                    <div style={{ position:"absolute", bottom:28, right:28, textAlign:"right" }}>
+                      <div style={{ fontSize:44, marginBottom:6 }}>{s.icon}</div>
+                      <div style={{ fontFamily:serif, fontSize:46, color:s.color, lineHeight:1 }}>{s.stat}</div>
+                      <div style={{ fontSize:11, color:C.greyL, letterSpacing:2, fontWeight:600, marginTop:4 }}>{s.statL.toUpperCase()}</div>
+                    </div>
+                  </div>
+                )}
               </div>
             </R>
           ))}
@@ -663,6 +858,8 @@ function KCEEWebsite() {
           .product-row{grid-template-columns:1fr!important;gap:20px!important;padding:24px 20px!important}
           .proj-stats{grid-template-columns:1fr 1fr!important;gap:12px!important}
           .solutions-header{flex-direction:column!important;gap:10px!important}
+          .sol-row{grid-template-columns:1fr!important;border-radius:14px!important}
+          .sol-row>div:first-child{min-height:220px!important}
         }
         @media(max-width:480px){
           .hero-h1{font-size:30px!important}
@@ -673,6 +870,7 @@ function KCEEWebsite() {
           .service-row{grid-template-columns:1fr!important}
           .product-row{grid-template-columns:1fr!important;padding:20px 16px!important}
           .modal-inner{padding:24px 16px!important}
+          .sol-row{grid-template-columns:1fr!important}
         }
       `}</style>
 
